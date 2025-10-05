@@ -32,6 +32,5 @@ def nome(cliente):
     return cliente['nome']
 
 def comprarProduto():
+    pass
     
-    
-

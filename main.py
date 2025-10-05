@@ -18,6 +18,7 @@ Atividades Propostas:
 - D. Relatório de produtos mais vendidos.
 - E. Relatório de previsão de falta.
 '''
+from limparTela import limpaTela
 import produto
 import clientes
 import vendas
@@ -26,6 +27,7 @@ import vendas
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
+        limpaTela()
         opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é Gerente\n[3] Sair.\n'))
     except ValueError:
         input('Digite uma opção válida.')
@@ -33,65 +35,72 @@ while True:
     else:
         match opcao:
             case 1:
-                print('Menu Cliente')
-                print('[1] Cadastrar')
-                print('[2] Comprar')
-                print('[3] Voltar')
-                try:
-                    opcao = int(input('Digite a opção desejada: '))
-                except ValueError:
-                    input('Opção inválida. Pressione qualquer tecla para continuar.')
-                    continue
-                else:
-                    match opcao:
-                        case 1:
-                            print('Menu Cadastro')
-                            clientes.cadastrar_cliente()
-                        case 2:
-                            print('Menu Compra')                         
-                        case 3:
-                            print('Voltar')
-                            continue
-                        case _: 
-                            input('Opção inválida. Pressione qualquer tecla para continuar.')
-                            continue
-
+                while True:
+                    limpaTela()
+                    print('Menu Cliente')
+                    print('[1] Cadastrar')
+                    print('[2] Comprar')
+                    print('[3] Voltar')
+                    try:
+                        opcao = int(input('Digite a opção desejada: '))
+                    except ValueError:
+                        input('Opção inválida. Pressione qualquer tecla para continuar.')
+                        continue
+                    else:
+                        match opcao:
+                            case 1:
+                                print('Menu Cadastro')
+                                clientes.cadastrar_cliente()
+                            case 2:
+                                print('Menu Compra')                         
+                            case 3:
+                                print('Voltar')
+                                continue
+                            case _: 
+                                input('Opção inválida. Pressione qualquer tecla para continuar.')
+                                continue
             case 2:
-                print('Menu Gerente')
-                print('[1] Adicionar produto')
-                print('[2] Remover produto')
-                print('[3] Listar produtos')
-                print('[4] Listar clientes')
-                print('[5] Relatórios')
-                print('[6] Voltar')
-                try:
-                    opcao = int(input('Digite a opção desejada: '))
-                except ValueError:
-                    input('Digite uma opção válida.')
-                    continue
-                else:
-                    match opcao:
-                        case 1:
-                            print('Adicionado produto...')
-                            produto.adicionar_produto()
-                        case 2:
-                            print('Removendo produto...')
-                            produto.remover_produto()
-                        case 3:
-                            print('Listar produtos')
-                            produto.listar_produtos()
-                        case 4:
-                            print('Listar clientes')
-                            produto.listar_clientes()
-                        case 5:
-                            print('Relatórios')
-                            produto.menu_relatorios()
-                        case 6:
-                            print('Voltar')
-                            continue
-                        case _: 
-                            input('Opção inválida. Pressione qualquer tecla para continuar.')
-                            continue 
+                while True:
+                    limpaTela()
+                    print('Menu Gerente')
+                    print('[1] Adicionar produto')
+                    print('[2] Remover produto')
+                    print('[3] Listar produtos')
+                    print('[4] Listar clientes')
+                    print('[5] Relatórios')
+                    print('[6] Voltar')
+                    try:
+                        opcao = int(input('Digite a opção desejada: '))
+                    except ValueError:
+                        input('Digite uma opção válida.')
+                        continue
+                    else:
+                        match opcao:
+                            case 1:
+                                limpaTela()
+                                print('Adicionado produto...')
+                                produto.adicionar_produto()
+                            case 2:
+                                limpaTela()
+                                print('Removendo produto...')
+                                produto.remover_produto()
+                            case 3:
+                                limpaTela()
+                                print('Listar produtos')
+                                produto.listar_produtos()
+                            case 4:
+                                limpaTela()
+                                print('Listar clientes')
+                                produto.listar_clientes()
+                            case 5:
+                                limpaTela()
+                                print('Relatórios')
+                                produto.menu_relatorios()
+                            case 6:
+                                break
+                            case _: 
+                                input('Opção inválida. Pressione qualquer tecla para continuar.')
+                                continue 
                     
             case 3:
                 print('Saindo...')
