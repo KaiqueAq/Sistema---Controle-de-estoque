@@ -1,12 +1,11 @@
 # Produtos
-from clientes import clientes
-
+#Estoque
 produtos = [
-    {'nome': 'Arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50},
-    {'nome': 'Feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30},
-    {'nome': 'Macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80},
-    {'nome': 'Leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20},
-    {'nome': 'Pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100} 
+    {'nome': 'Arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10}
+    {'nome': 'Feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30,'vendaPorDia': 15}
+    {'nome': 'Macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80,'vendaPorDia': 13}
+    {'nome': 'Leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20,'vendaPorDia': 8}
+    {'nome': 'Pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
 ]
 
 def adicionar_produto():
@@ -14,12 +13,13 @@ def adicionar_produto():
     preco = float(input("Preço: "))
     custo = float(input("Custo: "))
     estoque = int(input("Estoque inicial: "))
+    vendaPorDia = int(input("Venda por dia: "))
+
     if estoque > 100:
         print("Erro: Não é possível adicionar mais de 100 unidades de estoque.")
         return
-    produtos.append({'nome': nome, 'preco': preco, 'custo': custo, 'estoque': estoque})
-    print("Produto adicionado com sucesso.")
-
+    produtos.append({'nome': nome, 'preco': preco, 'custo': custo, 'estoque': estoque, 'vendaPorDia': vendaPorDia})
+    input("Produto adicionado com sucesso. Pressione qualquer tecla.")
 
 def remover_produto():
     nome = input("Nome do produto a remover: ")
@@ -28,7 +28,7 @@ def remover_produto():
             produtos.remove(p)
             print("Produto removido.")
             return
-    print("Produto não encontrado.")
+    input("Produto não encontrado. Pressione qualquer tecla.")
 
 def listar_produtos():
     produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
@@ -36,11 +36,16 @@ def listar_produtos():
     for p in produtos_ordenados:
         print(f"{p['nome']} - Preço: {p['preco']}, Estoque: {p['estoque']}")
 
-def listar_clientes():
-    clientes_ordenados = sorted(clientes, key=lambda x: x['nome'])
-    print("\nClientes:")
-    for c in clientes_ordenados:
-        print(f"{c['nome']} - CPF: {c['cpf']}")
+def produtos_mais_vendidos():
+    
+
+def previsao_falta():
+    for p in produtos:
+        diasRestantes =  p['estoque'] / p['vendaPorDia']
+        if diasRestantes <= 3:
+            input(f'O produto {p['nome']} restam {diasRestantes} dias restantes.')
+        elif diasRestantes <= 0:
+            input(f'O produto {p['nome']} está em falta.')
 
 def menu_relatorios():
     while True:
@@ -56,4 +61,4 @@ def menu_relatorios():
         elif opcao == '3':
             break
         else:
-            print("Opção inválida.")
+            input("Opção inválida. Pressione qualquer tecla.")

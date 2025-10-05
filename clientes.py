@@ -11,7 +11,27 @@ clientes = [
     {'nome': 'ITALO DUTRA SILVA', 'idade': 19, 'cpf': '727.997.820-78'},
     {'nome': 'VICTOR GUIMARÃES SILVA', 'idade': 52, 'cpf': '365.311.790-90'}
 ]
-def nome(cliente):
+
+def cadastrar_cliente():
+    print("Cadastrarmento de Cliente")
+    nome = input("Digite o nome do cliente: ").upper() #receber letras minúsculas
+    idade = int(input("Digite a idade do {nome}: "))
+    cpf = input(f"Digite o CPF do {nome}: ")
+
+    novocliente = {
+        'nome': nome, 'idade': idade, 'cpf': cpf
+    }
+    clientes.append(novocliente)
+
+    print(f"Cliente{nome}cadastramento realizado!")
     
-clientes.sort()
-print(clientes)
+def nome(cliente): 
+    clientes.sort(key=nome)
+    for i in clientes:
+        print(f"{i['nome']} - {i['idade']} anos - CPF: {i['cpf']}")
+    return cliente['nome']
+
+def comprarProduto():
+    
+    
+

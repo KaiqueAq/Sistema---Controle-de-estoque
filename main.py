@@ -18,11 +18,11 @@ Atividades Propostas:
 - D. Relatório de produtos mais vendidos.
 - E. Relatório de previsão de falta.
 '''
-from produto import adicionar_produto
 import produto
+import clientes
+import vendas
 
-estoqueMax = 100
-produto.adicionar_produto()
+
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
@@ -36,8 +36,7 @@ while True:
                 print('Menu Cliente')
                 print('[1] Cadastrar')
                 print('[2] Comprar')
-                print('[3] Ver Catálogo')
-                print('[4] Voltar')
+                print('[3] Voltar')
                 try:
                     opcao = int(input('Digite a opção desejada: '))
                 except ValueError:
@@ -47,11 +46,12 @@ while True:
                     match opcao:
                         case 1:
                             print('Menu Cadastro')
+                            clientes.cadastrar_cliente()
                         case 2:
-                            print('Menu Compra')
+                            print('Menu Compra')                         
                         case 3:
-                            print('Menu catálogo')
-                        case 4: break
+                            print('Voltar')
+                            continue
                         case _: 
                             input('Opção inválida. Pressione qualquer tecla para continuar.')
                             continue
@@ -73,15 +73,19 @@ while True:
                     match opcao:
                         case 1:
                             print('Adicionado produto...')
-                            adicionar_produto()
+                            produto.adicionar_produto()
                         case 2:
                             print('Removendo produto...')
+                            produto.remover_produto()
                         case 3:
                             print('Listar produtos')
+                            produto.listar_produtos()
                         case 4:
                             print('Listar clientes')
+                            produto.listar_clientes()
                         case 5:
                             print('Relatórios')
+                            produto.menu_relatorios()
                         case 6:
                             print('Voltar')
                             continue
