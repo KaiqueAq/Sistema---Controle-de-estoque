@@ -9,10 +9,15 @@ produtos = [
 ]
 
 def adicionar_produto():
-    nome = input("Nome do produto: ")
+    nome = input("Nome do produto: ").lower()
+    for p in produtos:
+        if p['nome'] == nome:
+            input('Produto já existe. Tente novamente.')
+            return  
     preco = float(input("Preço: "))
     custo = float(input("Custo: "))
     estoque = int(input("Estoque inicial: "))
+        
     vendaPorDia = int(input("Venda por dia: "))
 
     if estoque > 100:
@@ -22,11 +27,49 @@ def adicionar_produto():
     input("Produto adicionado com sucesso. Pressione qualquer tecla.")
 
 def remover_produto():
+    produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
+    print("\nProdutos:")
+    for p in produtos_ordenados:
+        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
+
     nome = input("Nome do produto a remover: ")
     for p in produtos:
         if p['nome'].lower() == nome.lower():
             produtos.remove(p)
-            print("Produto removido.")
+            input("Produto removido.")
+            return
+    input("Produto não encontrado. Pressione qualquer tecla.")
+
+def atualizar_produto():
+    produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
+    print("\nProdutos:")
+    for p in produtos_ordenados:
+        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
+
+    nomeAtt = input("\nNome do produto a atualizar: ")
+    for p in produtos:
+        if p['nome'].lower() == nomeAtt.lower():
+            opcaoDesejada = input('O que você deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
+            if opcaoDesejada == 'preço':
+                precoAtt = float(input('Informe o novo preço: '))
+                p['preco'] = precoAtt
+                input('Preço atualizado com sucesso.')
+                return
+            elif opcaoDesejada == 'custo':
+                custoAtt = float(input('Informe o novo custo: '))
+                p['custo'] = custoAtt
+                input('Custo atualizado com sucesso.')
+                return
+            elif opcaoDesejada == 'estoque':
+                estoqueAtt = int(input('Informe o novo estoque: '))
+                p['estoque'] = estoqueAtt
+                input('Estoque atualizado com sucesso.')
+                return
+            elif opcaoDesejada == 'vendas por dia':
+                vendaAtt = int(input('Informe a nova quantidade de vendas por dia: '))
+                p['vendaPorDia'] = vendaAtt
+                input('Vendas por dia atualizado com sucesso.')
+                return
             return
     input("Produto não encontrado. Pressione qualquer tecla.")
 

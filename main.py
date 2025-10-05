@@ -52,7 +52,8 @@ while True:
                                 print('Menu Cadastro')
                                 clientes.cadastrar_cliente()
                             case 2:
-                                print('Menu Compra')                         
+                                print('Menu Compra') 
+                                produto.listar_produtos()
                             case 3:
                                 print('Voltar')
                                 continue
@@ -65,10 +66,11 @@ while True:
                     print('Menu Gerente')
                     print('[1] Adicionar produto')
                     print('[2] Remover produto')
-                    print('[3] Listar produtos')
-                    print('[4] Listar clientes')
-                    print('[5] Relatórios')
-                    print('[6] Voltar')
+                    print('[3] Atualizar produto')
+                    print('[4] Listar produtos')
+                    print('[5] Listar clientes')
+                    print('[6] Relatórios')
+                    print('[7] Voltar')
                     try:
                         opcao = int(input('Digite a opção desejada: '))
                     except ValueError:
@@ -86,17 +88,21 @@ while True:
                                 produto.remover_produto()
                             case 3:
                                 limpaTela()
+                                print('Atualizando produto...')
+                                produto.atualizar_produto()
+                            case 4:
+                                limpaTela()
                                 print('Listar produtos')
                                 produto.listar_produtos()
-                            case 4:
+                            case 5:
                                 limpaTela()
                                 print('Listar clientes')
                                 produto.listar_clientes()
-                            case 5:
+                            case 6:
                                 limpaTela()
                                 print('Relatórios')
                                 produto.menu_relatorios()
-                            case 6:
+                            case 7:
                                 break
                             case _: 
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')

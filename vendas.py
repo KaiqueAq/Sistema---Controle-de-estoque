@@ -1,7 +1,12 @@
-# produtos = [
-#     {'nome': 'Arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
-#     {'nome': 'Feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30,'vendaPorDia': 15},
-#     {'nome': 'Macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80,'vendaPorDia': 13},
-#     {'nome': 'Leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20,'vendaPorDia': 8},
-#     {'nome': 'Pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
-# ]
+vendas = [
+   {
+       'cliente_cpf': '906.526.200-86',
+       'produtos': [
+           {'nome': 'Arroz', 'quantidade': 2},
+           {'nome': 'Feijão', 'quantidade': 1}
+       ],
+       'total': 18.00,
+       'lucro': 3.50,
+       'data': '2023-10-01'
+     }
+]

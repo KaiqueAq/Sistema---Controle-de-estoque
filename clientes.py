@@ -1,5 +1,4 @@
 #Cadastramento
-
 clientes = [
     {'nome': 'JOÃO ALMEIDA DE SOUZA', 'idade': 21, 'cpf': '906.526.200-86'},
     {'nome': 'MARIA APARECIDA', 'idade': 37, 'cpf': '870.026.320-60'},
@@ -13,23 +12,42 @@ clientes = [
 ]
 
 def cadastrar_cliente():
-    print("Cadastrarmento de Cliente")
-    nome = input("Digite o nome do cliente: ").upper() #receber letras minúsculas
-    idade = int(input("Digite a idade do {nome}: "))
-    cpf = input(f"Digite o CPF do {nome}: ")
+    print("Cadastro de Cliente")
+    nome =input("Digite o nome do cliente: "). upper()
+    while True:
+        try:
+            idade = int(input(f"Digite a idade de {nome}: "))
+            break
+        except ValueError:
+            print("Idade inválida")
+    cpf = input(f"Digite o cpf {nome}: ")
+    clientes.append({'nome': nome, 'idade': idade, 'cpf': cpf})
+    print(f"Cliente {nome} cadastramento com sucesso!")
 
-    novocliente = {
-        'nome': nome, 'idade': idade, 'cpf': cpf
-    }
-    clientes.append(novocliente)
-
-    print(f"Cliente{nome}cadastramento realizado!")
-    
-def nome(cliente): 
-    clientes.sort(key=nome)
-    for i in clientes:
-        print(f"{i['nome']} - {i['idade']} anos - CPF: {i['cpf']}")
+def cadastro_nomes(cliente):
     return cliente['nome']
+
+def listar_clientes(cliente):
+    print("Lista de clientes do Mercado atualizada")
+    clientes.sort(key=cadastro_nomes)
+    for i in clientes:
+        print(f"{i['nome']} - {i['idade']} aos - CPF {i['cpf']} ")
+
+while True:
+    print ("1. Cadastrar Novo Cliente")
+    print ("2. Listar Clientes")
+    print( "3. Sair")
+    opcao = input("Escolha uma opção")
+    if opcao == '1':
+        cadastrar_cliente()
+    elif opcao == '2':
+        listar_clientes()
+    elif opcao == '3':
+        print("Sair")
+        break
+    else:
+        print("inválida")
+
 
 def comprarProduto():
     pass
