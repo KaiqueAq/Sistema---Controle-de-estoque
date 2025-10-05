@@ -1,11 +1,11 @@
 # Produtos
 #Estoque
 produtos = [
-    {'nome': 'Arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
-    {'nome': 'Feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30,'vendaPorDia': 15},
-    {'nome': 'Macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80,'vendaPorDia': 13},
-    {'nome': 'Leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20,'vendaPorDia': 8},
-    {'nome': 'Pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
+    {'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
+    {'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30,'vendaPorDia': 15},
+    {'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80,'vendaPorDia': 13},
+    {'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20,'vendaPorDia': 8},
+    {'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
 ]
 
 def adicionar_produto():
@@ -16,13 +16,14 @@ def adicionar_produto():
             return  
     preco = float(input("Preço: "))
     custo = float(input("Custo: "))
-    estoque = int(input("Estoque inicial: "))
-        
+    while True:
+        estoque = int(input("Estoque inicial: "))
+        if estoque > 100:
+            print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")
+            continue
+        elif estoque <= 100:
+            break
     vendaPorDia = int(input("Venda por dia: "))
-
-    if estoque > 100:
-        print("Erro: Não é possível adicionar mais de 100 unidades de estoque.")
-        return
     produtos.append({'nome': nome, 'preco': preco, 'custo': custo, 'estoque': estoque, 'vendaPorDia': vendaPorDia})
     input("Produto adicionado com sucesso. Pressione qualquer tecla.")
 
