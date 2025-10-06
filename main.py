@@ -21,7 +21,6 @@ Atividades Propostas:
 from limparTela import limpaTela
 import produto, clientes, vendas, funcionarios as fc
 
-
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
@@ -36,9 +35,8 @@ while True:
                 while True:
                     limpaTela()
                     print('Menu Cliente')
-                    print('[1] Cadastrar')
-                    print('[2] Comprar')
-                    print('[3] Voltar')
+                    print('[1] Comprar')
+                    print('[2] Voltar')
                     try:
                         opcao = int(input('Digite a opção desejada: '))
                     except ValueError:
@@ -47,12 +45,9 @@ while True:
                     else:
                         match opcao:
                             case 1:
-                                print('Menu Cadastro')
-                                clientes.cadastrar_cliente()
-                            case 2:
                                 print('Menu Compra') 
                                 clientes.comprarProduto()
-                            case 3:
+                            case 2:
                                 print('Voltar')
                                 break
                             case _: 
@@ -85,7 +80,7 @@ while True:
                                     match opcao:
                                         case 1:
                                             clientes.cadastrar_cliente()
-                                        case 2: 
+                                        case 2:  
                                             pass
                                         case 3: rodando = False; break
                     if logou == False:
@@ -143,10 +138,9 @@ while True:
                                 break
                             case _: 
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')
-                                continue 
-                    
+                                continue            
             case 4:
-                print('Saindo...')
+                input('Saindo...')
                 break
             case _:
                 input('Opção inválida. Pressione qualquer tecla para continuar.')

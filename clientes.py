@@ -14,27 +14,16 @@ clientes = [
     {'nome': 'VICTOR GUIMARÃES SILVA', 'idade': 52, 'cpf': '365.311.790-90'}
 ]
 
-# clientes2Ordem = sorted(clientes2, key=)
-# print(clientes2Ordem)
-
-# def ordem(i):
-#     return i['cpf']
-
-# for c in clientesOrdenados3:
-#     print(c)
-
+# def ordem(x):
+#     return x['nome']
 # clientesOrdenados = sorted(clientes, key=ordem)
-# clientesOrdenados2 = sorted(clientes, key=lambda x: x['idade'])
-# clientesOrdenados = sorted(clientes, key= lambda x:x['nome'])
+# for c in clientesOrdenados:
+#     print(c)
 
 # for c in clientesOrdenados2:
 #     print('|            nome            | idade |      CPF      |')
 #     print(f'|{c['nome']:^28}|{c['idade']:^7}|{c['cpf']:^15}|')
 #     print('=+'*27)
-
-# print('=+'*25)
-# for c in clientesOrdenados:
-#     print(c)
 
 def cadastrar_cliente():
     print("Cadastro de Cliente")
@@ -106,6 +95,9 @@ def comprarProduto():
                     input('Estoque não supre o pedido.')
                 elif qualQntd <= i['estoque']:
                     i['estoque'] -= qualQntd
+
+
+
                     input(f'Compra realizada com sucesso. Restam {i['estoque']} unidades.')
                     if i['estoque'] <= 0:
                         pd.produtos.remove(i)
