@@ -19,16 +19,14 @@ Atividades Propostas:
 - E. Relatório de previsão de falta.
 '''
 from limparTela import limpaTela
-import produto
-import clientes
-import vendas
+import produto, clientes, vendas, funcionarios as fc
 
 
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
         limpaTela()
-        opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é Gerente\n[3] Sair.\n'))
+        opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é funcionário\nDigite [3] se você é Gerente\n[4] Sair.\n'))
     except ValueError:
         input('Digite uma opção válida.')
         continue
@@ -53,14 +51,48 @@ while True:
                                 clientes.cadastrar_cliente()
                             case 2:
                                 print('Menu Compra') 
-                                produto.listar_produtos()
+                                clientes.comprarProduto()
                             case 3:
                                 print('Voltar')
-                                continue
+                                break
                             case _: 
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')
                                 continue
-            case 2:
+            case 2:  
+                rodando = True
+                while rodando:
+                    usuario = input('Usuário (ou sair): ')
+                    if usuario == 'sair':
+                        break
+                    senha = input('Senha: ')
+                    logou = False
+                    for funcionario in fc.funcionarios:
+                        if funcionario['nome'] == usuario and funcionario['senha'] == senha:
+                            input(f'Olá {usuario}. Login realizado com sucesso.\n')
+                            logou = True
+                            while True:
+                                limpaTela()
+                                print('Menu Funcionário')
+                                print('[1] Cadastrar cliente')
+                                print('[2] Atualizar cliente')
+                                print('[3] Sair')
+                                try:
+                                    opcao = int(input('Digite a opção desejada: '))
+                                except ValueError:
+                                    input('Digite uma opção válida.')
+                                    continue
+                                else:
+                                    match opcao:
+                                        case 1:
+                                            clientes.cadastrar_cliente()
+                                        case 2: 
+                                            pass
+                                        case 3: rodando = False; break
+                    if logou == False:
+                        input('Login inválido. Pressione qualquer tecla para continuar.')
+                        limpaTela()
+                        continue   
+            case 3:
                 while True:
                     limpaTela()
                     print('Menu Gerente')
@@ -69,8 +101,9 @@ while True:
                     print('[3] Atualizar produto')
                     print('[4] Listar produtos')
                     print('[5] Listar clientes')
-                    print('[6] Relatórios')
-                    print('[7] Voltar')
+                    print('[6] Listar funcionários')
+                    print('[7] Relatórios')
+                    print('[8] Voltar')
                     try:
                         opcao = int(input('Digite a opção desejada: '))
                     except ValueError:
@@ -92,23 +125,27 @@ while True:
                                 produto.atualizar_produto()
                             case 4:
                                 limpaTela()
-                                print('Listar produtos')
+                                print('Listando produtos...')
                                 produto.listar_produtos()
                             case 5:
                                 limpaTela()
-                                print('Listar clientes')
-                                produto.listar_clientes()
+                                print('Listando clientes...')
+                                clientes.listar_clientes(clientes.clientes)
                             case 6:
+                                limpaTela()
+                                print('Listando funcionários...')
+                                fc.atualizar_funcionarios(fc.funcionarios)
+                            case 7:
                                 limpaTela()
                                 print('Relatórios')
                                 produto.menu_relatorios()
-                            case 7:
+                            case 8:
                                 break
                             case _: 
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')
                                 continue 
                     
-            case 3:
+            case 4:
                 print('Saindo...')
                 break
             case _:

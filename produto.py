@@ -47,9 +47,9 @@ def atualizar_produto():
     for p in produtos_ordenados:
         print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
 
-    nomeAtt = input("\nNome do produto a atualizar: ")
+    nomeAtt = input("\nNome do produto a atualizar: ").lower()
     for p in produtos:
-        if p['nome'].lower() == nomeAtt.lower():
+        if p['nome'] == nomeAtt:
             opcaoDesejada = input('O que você deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
             if opcaoDesejada == 'preço':
                 precoAtt = float(input('Informe o novo preço: '))
@@ -63,9 +63,12 @@ def atualizar_produto():
                 return
             elif opcaoDesejada == 'estoque':
                 estoqueAtt = int(input('Informe o novo estoque: '))
-                p['estoque'] = estoqueAtt
-                input('Estoque atualizado com sucesso.')
-                return
+                if p['estoque'] + estoqueAtt > 100:
+                    input('Estoque excede o limite.')
+                else:
+                    p['estoque'] = estoqueAtt
+                    input('Estoque atualizado com sucesso.')
+                    return
             elif opcaoDesejada == 'vendas por dia':
                 vendaAtt = int(input('Informe a nova quantidade de vendas por dia: '))
                 p['vendaPorDia'] = vendaAtt
