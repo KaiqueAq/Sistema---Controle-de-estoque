@@ -8,6 +8,12 @@ produtos = [
     {'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
 ]
 
+#def gerar_codigo():
+#    if len(produtos) == 0:
+ #     return 1
+ #   else:
+#        return max(p['codigo'] for p in produtos) + 1
+
 def adicionar_produto():
     nome = input("Nome do produto: ").lower()
     for p in produtos:
@@ -24,18 +30,23 @@ def adicionar_produto():
         elif estoque <= 100:
             break
     vendaPorDia = int(input("Venda por dia: "))
-    produtos.append({'nome': nome, 'preco': preco, 'custo': custo, 'estoque': estoque, 'vendaPorDia': vendaPorDia})
-    input("Produto adicionado com sucesso. Pressione qualquer tecla.")
+
+    produtos.append({
+        # 'codigo': codigo,
+        'nome': nome,
+        'preco': preco,
+        'custo': custo,
+        'estoque': estoque,
+        'vendaPorDia': vendaPorDia
+    })
+    input("Produto adicionado com sucesso: {codigo} Pressione qualquer tecla.")
 
 def remover_produto():
     produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
-
-    nome = input("Nome do produto a remover: ")
+    listar_produtos()
+    codigo = int(input("Digite o código do  produto para remove-lo"))
     for p in produtos:
-        if p['nome'].lower() == nome.lower():
+        if p['codigo'] == codigo:
             produtos.remove(p)
             input("Produto removido.")
             return

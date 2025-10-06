@@ -45,9 +45,11 @@ while True:
                     else:
                         match opcao:
                             case 1:
+                                limpaTela()
                                 print('Menu Compra') 
                                 clientes.comprarProduto()
                             case 2:
+                                limpaTela()
                                 print('Voltar')
                                 break
                             case _: 
@@ -68,9 +70,11 @@ while True:
                             while True:
                                 limpaTela()
                                 print('Menu Funcionário')
-                                print('[1] Cadastrar cliente')
-                                print('[2] Atualizar cliente')
-                                print('[3] Sair')
+                                print('[1] Adicionar produto')
+                                print('[2] Listar produtos')
+                                print('[3] Remover produto')
+                                print('[4] Listar clientes')
+                                print('[5] Voltar')
                                 try:
                                     opcao = int(input('Digite a opção desejada: '))
                                 except ValueError:
@@ -79,26 +83,44 @@ while True:
                                 else:
                                     match opcao:
                                         case 1:
-                                            clientes.cadastrar_cliente()
-                                        case 2:  
-                                            pass
-                                        case 3: rodando = False; break
+                                            limpaTela()
+                                            produto.adicionar_produto()
+                                        case 2:
+                                            limpaTela()
+                                            produto.listar_produtos()
+                                        case 3:
+                                            limpaTela()
+                                            produto.remover_produto()
+                                        case 4:
+                                            limpaTela()
+                                            clientes.listar_clientes(clientes.clientes)
+                                        case 5:
+                                            break
+                                        case _:
+                                            input('Opção inválida. Pressione qualquer tecla para continuar.')
+                                            continue
                     if logou == False:
                         input('Login inválido. Pressione qualquer tecla para continuar.')
                         limpaTela()
                         continue   
             case 3:
-                while True:
+                rodando = True
+                while rodando:
+                    usuario = input('Usuário (ou sair): ')
+                    if usuario == 'sair':
+                        break
+                    senha = input('Senha: ')
+                    logou = False
+                    for gerente in fc.gerente:
+                        if gerente['nome'] == usuario and gerente['senha'] == senha:
+                            input(f'Olá {usuario}. Login realizado com sucesso.\n')
+                            logou = True
                     limpaTela()
                     print('Menu Gerente')
-                    print('[1] Adicionar produto')
-                    print('[2] Remover produto')
-                    print('[3] Atualizar produto')
-                    print('[4] Listar produtos')
-                    print('[5] Listar clientes')
-                    print('[6] Listar funcionários')
-                    print('[7] Relatórios')
-                    print('[8] Voltar')
+                    print('[1] Atualizar produto')
+                    print('[2] Listar funcionários')
+                    print('[3] Relatórios')
+                    print('[4] Voltar')
                     try:
                         opcao = int(input('Digite a opção desejada: '))
                     except ValueError:
@@ -108,37 +130,18 @@ while True:
                         match opcao:
                             case 1:
                                 limpaTela()
-                                print('Adicionado produto...')
-                                produto.adicionar_produto()
+                                produto.atualizar_produto()
                             case 2:
                                 limpaTela()
-                                print('Removendo produto...')
-                                produto.remover_produto()
+                                fc.atualizar_funcionarios(fc.funcionarios)
                             case 3:
                                 limpaTela()
-                                print('Atualizando produto...')
-                                produto.atualizar_produto()
-                            case 4:
-                                limpaTela()
-                                print('Listando produtos...')
-                                produto.listar_produtos()
-                            case 5:
-                                limpaTela()
-                                print('Listando clientes...')
-                                clientes.listar_clientes(clientes.clientes)
-                            case 6:
-                                limpaTela()
-                                print('Listando funcionários...')
-                                fc.atualizar_funcionarios(fc.funcionarios)
-                            case 7:
-                                limpaTela()
-                                print('Relatórios')
                                 produto.menu_relatorios()
-                            case 8:
+                            case 4:
                                 break
-                            case _: 
+                            case _:
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')
-                                continue            
+                                continue
             case 4:
                 input('Saindo...')
                 break

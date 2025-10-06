@@ -10,6 +10,18 @@
 
 # Colocar ID no produto, pensar sobre a função sorted
 
-# Criar do gerente
+# Criar do gerente✔
 
+# adicionar listar clientes e atualizar clientes ✔
 
+# funcionario:✔
+    adicionar produto
+    listar produtos
+    remover produto
+    listar clientes
+    voltar
+# gerente✔
+    atualizar produto
+    listar funcionarios
+    relatórios 
+    voltar

@@ -47,9 +47,11 @@ def cadastro_nomes(cliente):
 
 def listar_clientes(clientes):
     print("Lista de clientes do Mercado atualizada")
-    clientes.sort(key=clientes['nome'])
-    for i in clientes:
+    clientes_ordenados = sorted(clientes, key=lambda x: x['nome'])
+    print("\nClientes:")
+    for i in clientes_ordenados:
         print(f"{i['nome']} - {i['idade']} aos - CPF {i['cpf']} ")
+    input('\nDigite qualquer tecla.')
 
 def remover_cliente():
     nome_remover = input("Digite o nome do cliente a ser removido: "). upper()
@@ -86,24 +88,45 @@ def comprarProduto():
         print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
  
     while True:
-        qualProduto = input('\nQual produto deseja comprar? ')
+        try:
+            qntsProdutos = int(input('Quantos produtos diferentes deseja comprar? '))
+            for _ in range(qntsProdutos):
+                qualProduto = input('\nQual produto deseja comprar? ')
 
-        for i in pd.produtos:
-            if i['nome'] == qualProduto:
-                qualQntd = int(input('Informe a quantidade desejada: '))
-                if qualQntd > i['estoque']:
-                    input('Estoque não supre o pedido.')
-                elif qualQntd <= i['estoque']:
-                    i['estoque'] -= qualQntd
+                for i in pd.produtos:
+                    if i['nome'] == qualProduto:
+                        qualQntd = int(input('Informe a quantidade desejada: '))
+                        if qualQntd > i['estoque']:
+                            input('Estoque não supre o pedido.')
+                        elif qualQntd <= i['estoque']:
+                            i['estoque'] -= qualQntd
+                            
+                            for c in p:
+                                nova_venda = [
+                                {
+                                'cliente_cpf': None,
+                                'produtos': [
+                                    {'nome': qualProduto, 'quantidade': qualQntd},
+                                    {'nome': 'Feijão', 'quantidade': 1}
+                                ],
+                                'total': 18.00,
+                                'lucro': c['lucro'],
+                                'data': '2023-10-01'
+                                }
+                            ]
 
 
+                            
 
-                    input(f'Compra realizada com sucesso. Restam {i['estoque']} unidades.')
-                    if i['estoque'] <= 0:
-                        pd.produtos.remove(i)
-                        input('Estoque zerado. Produto removido.')
-                        return
-                    return
+                            input(f'Compra realizada com sucesso. Restam {i['estoque']} unidades.')
+                            if i['estoque'] <= 0:
+                                pd.produtos.remove(i)
+                                input('Estoque zerado. Produto removido.')
+                                return
+                            return
+        except ValueError:
+            input('Informação inválida. Tente novamente.')
+            continue
                     
         if i['nome'] != qualProduto:
             input('Inválido. Tente novamente.')
