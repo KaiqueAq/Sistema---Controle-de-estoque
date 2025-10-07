@@ -1,20 +1,18 @@
 #Estoque
 import vendas as vd, os
 
+estoqueMax = 100
+
 produtos = [
-    {'codigo': 1, 'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
-    {'codigo': 2, 'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30, 'vendaPorDia': 15},
-    {'codigo': 3, 'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80, 'vendaPorDia': 13},
-    {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20, 'vendaPorDia': 8},
-    {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100, 'vendaPorDia': 19}
+    {'codigo': 1, 'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'lucro': 1.50, 'estoque': 50, 'vendaPorDia': 10},
+    {'codigo': 2, 'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'lucro': 1.50, 'estoque': 30, 'vendaPorDia': 15},
+    {'codigo': 3, 'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'lucro': 0.70, 'estoque': 80, 'vendaPorDia': 13},
+    {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'lucro': 0.70, 'estoque': 20, 'vendaPorDia': 8},
+    {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'lucro': 0.50, 'estoque': 100, 'vendaPorDia': 19}
 ]
-
-for produto in produtos:
-    # Cria a nova chave 'lucro' e atribui o resultado de preco - custo
-    produto['lucro'] = produto['preco'] - produto['custo']
-
-produtosComLucro = produtos
-produtosOrdenados = sorted(produtosComLucro, key=lambda x:x['nome'])
+# produtos.sort(key=lambda x:x['nome'])
+produtosOrdenados = sorted(produtos, key=lambda x:x['nome'])
+produtosOrdemPeloCod = sorted(produtosOrdenados, key=lambda x:x['codigo'])
 
 def gerar_codigo():
     if len(produtos) == 0:
@@ -48,6 +46,7 @@ def adicionar_produto():
         'nome': nome,
         'preco': preco,
         'custo': custo,
+        'lucro': (preco - custo),
         'estoque': estoque,
         'vendaPorDia': vendaPorDia
     })
@@ -55,8 +54,8 @@ def adicionar_produto():
     input(f"Produto adicionado com sucesso! Código do produto: {codigo}. Pressione qualquer tecla.")
 
 def remover_produto():
-    listar_produtos()
-    codigo = int(input("Digite o código do produto a remover: "))
+    listar_produtos_att()
+    codigo = int(input("\nDigite o código do produto a remover: "))
     for p in produtos:
         if p['codigo'] == codigo:
             produtos.remove(p)
@@ -71,7 +70,7 @@ def atualizar_produto():
         return
     elif codigo.isnumeric():
         codigo = int(codigo)
-    for p in produtos:
+    for p in produtosOrdenados:
         if p['codigo'] == codigo:
             opcaoDesejada = input('O que deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
             if opcaoDesejada == 'preço':
@@ -83,7 +82,7 @@ def atualizar_produto():
             elif opcaoDesejada == 'estoque':
                 novo_estoque = int(input('Novo estoque: '))
                 if novo_estoque > 100:
-                    input('Estoque excede o limite.')
+                    input(f'Estoque excede o limite de {estoqueMax}.')
                 else:
                     p['estoque'] = novo_estoque
                     input('Estoque atualizado com sucesso.')
@@ -94,36 +93,62 @@ def atualizar_produto():
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def listar_produtos():
-    produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
-    input('\nDigite qualquer tecla.')
+    print('Produtos:')
+    print('______________________________________________________________________________')
+    print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Venda/dia |')
+    for p in produtos:
+        print(f"|{p['codigo']:^5}|{p['nome']:^18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:^9}|{p['vendaPorDia']:^11}|")
+    print('==============================================================================')
+    input('\nPressione qualquer tecla para continuar.')
+        
+def ver_produtos():
+    print('Produtos:')
+    for p in produtosOrdenados:
+        print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
 
 def listar_produtos_att():
-    produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
+    print("Atualizando produtos:")
+    print('_______________________________________________________________________________')
+    print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Vendas/dia |')
+    for p in produtos:
+        print(f"|{p['codigo']:^5}|{p['nome']:^18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:^9}|{p['vendaPorDia']:^12}|")
+    print('===============================================================================')
 
-def ver_produtos():
-    produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
+
+# def listar_produtos():
+#     produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
+#     print("\nProdutos:")
+#     for p in produtos_ordenados:
+#         print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
+#     input('\nDigite qualquer tecla.')
+
+# def listar_produtos_att():
+#     produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
+#     print("\nAtualizando produtos:")
+#     for p in produtos_ordenados:
+#         print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
+
+# def ver_produtos():
+#     produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
+#     print("\nProdutos:")
+#     for p in produtos_ordenados:
+#         print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
         
 def menu_relatorios():
     while True:
         os.system('cls')
-        print("Relatórios")
-        print("[1] Produtos mais vendidos")
-        print("[2] Previsão de falta")
-        print("[3] Voltar")
+        print('_=+=+=+=+=+=+=+=+=+=+=+=+=+_')
+        print('|        RELATÓRIOS        |')
+        print('*--------------------------*')
+        print('|[1] Produtos mais vendidos|')
+        print('|[2] Previsão de falta     |')
+        print('|[3] Voltar                |')
+        print('*=+=+=+=+=+=+=+=+=+=+=+=+=+*')
         opcao = input("Escolha uma opção: ")
         if opcao == '1':
-            vd.maisVendidos(produtosComLucro)
+            vd.maisVendidos(produtosOrdenados)
         elif opcao == '2':
-            vd.previsaoFalta(produtosComLucro)
+            vd.previsaoFalta(produtosOrdenados)
         elif opcao == '3':
             break
         else:

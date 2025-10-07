@@ -1,4 +1,4 @@
-import produto as pd, math, os
+import math, os
 
 vendas = []
 carrinhoDeCompra = []
@@ -32,7 +32,7 @@ def maisVendidos(produtosComLucro):
     print("Ranking por média de vendas diárias:\n")
     for i, produto in enumerate(mais_vendidos, start=1):
         # O f-string formata a saída de forma legível
-        print(f"{i}º lugar: {produto['nome'].title()} ({produto['vendaPorDia']} vendas/dia)")
+        print(f"{i}º lugar: {produto['nome']} ({produto['vendaPorDia']} vendas/dia)")
     input('\nPressione qualquer tecla para continuar.')
 
 

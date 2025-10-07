@@ -7,10 +7,12 @@ import produto as pd
 def listar_funcionarios(funcionarios):
     print("Lista de funcionarios do Mercado atualizada")
     funcionarios_ordenados = sorted(funcionarios, key=lambda x: x['nome'])
-    print("\nfuncionarios:")
+    print('=+'*23)
+    print('|QUADRO DE FUNCIONÁRIOS                      |')
+    print('=+'*23)
     for i in funcionarios_ordenados:
-        print(f"Nome: {i['nome']} | Idade: {i['idade']} anos.")
-        print('--'*22)
+        print(f"|Nome: {i['nome']:<19} | Idade: {i['idade']:<3} anos.|")
+        print('=+'*23)
     input('\nDigite qualquer tecla.')
 
 funcionarios = [

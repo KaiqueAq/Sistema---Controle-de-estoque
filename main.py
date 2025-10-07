@@ -18,15 +18,22 @@ Atividades Propostas:
 - D. Relatório de produtos mais vendidos.
 - E. Relatório de previsão de falta.
 '''
-import os
 from limparTela import limpaTela
-import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd
+import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd, os, time
 
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
         limpaTela()
-        opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é Funcionário\nDigite [3] se você é Gerente\n[4] Sair.\n'))
+        print('_=+=+=+=+=+=+=+=+=+=+_')
+        print('| SISTEMA DE MERCADO |')
+        print('*--------------------*')
+        print('|[1] Cliente         |')
+        print('|[2] Funcionário     |')
+        print('|[3] Gerente         |')
+        print('|[4] Sair            |')
+        print('*=+=+=+=+=+=+=+=+=+=+*')
+        opcao = int(input('Digite a opção desejada: '))
     except ValueError:
         input('Digite uma opção válida.')
         continue
@@ -35,9 +42,12 @@ while True:
             case 1:
                 while True:
                     limpaTela()
-                    print('Menu cliente')
-                    print('[1] Comprar')
-                    print('[2] Voltar')
+                    print('_=+=+=+=+=+=+=+_')
+                    print('| MENU CLIENTE |')
+                    print('*--------------*')
+                    print('|[1] Comprar   |')
+                    print('|[2] Voltar    |')
+                    print('*=+=+=+=+=+=+=+*')
                     try:
                         opcao = int(input('Digite a opção desejada: '))
                     except ValueError:
@@ -68,12 +78,15 @@ while True:
                             logou = True
                             while True:
                                 limpaTela()
-                                print('Menu Funcionário')
-                                print('[1] Adicionar produto')
-                                print('[2] Listar produtos')
-                                print('[3] Remover produto')
-                                print('[4] Listar clientes')
-                                print('[5] Voltar')
+                                print('_=+=+=+=+=+=+=+=+=+=+=+_')
+                                print('|   Menu Funcionário   |')
+                                print('*----------------------*')
+                                print('|[1] Adicionar produto |')
+                                print('|[2] Listar produtos   |')
+                                print('|[3] Remover produto   |')
+                                print('|[4] Listar clientes   |')
+                                print('|[5] Voltar            |')
+                                print('*=+=+=+=+=+=+=+=+=+=+=+*')
                                 try:
                                     opcao = int(input('Digite a opção desejada: '))
                                 except ValueError:
@@ -117,12 +130,15 @@ while True:
                             logou = True
                             while True:
                                 limpaTela()
-                                print('Menu Gerente')
-                                print('[1] Atualizar produto')
-                                print('[2] Listar funcionários')
-                                print('[3] Atualizar funcionários')
-                                print('[4] Relatórios')
-                                print('[5] Voltar')
+                                print('_=+=+=+=+=+=+=+=+=+=+=+=+=+_')
+                                print('|       Menu Gerente       |')
+                                print('*--------------------------*')
+                                print('|[1] Atualizar produto     |')
+                                print('|[2] Listar funcionários   |')
+                                print('|[3] Atualizar funcionários|')
+                                print('|[4] Relatórios            |')
+                                print('|[5] Voltar                |')
+                                print('*=+=+=+=+=+=+=+=+=+=+=+=+=+*')
                                 try:
                                     opcao = int(input('Digite a opção desejada: '))
                                 except ValueError:
@@ -152,7 +168,8 @@ while True:
                         limpaTela()
                         continue  
             case 4:
-                input('Saindo...')
+                print('Saindo...')
+                time.sleep(2)
                 break
             case _:
                 input('Opção inválida. Pressione qualquer tecla para continuar.')
