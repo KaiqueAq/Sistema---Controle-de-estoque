@@ -1,3 +1,11 @@
+# atualização de funcionários
+
+# E quando compra e o estoque fica 0 resolver
+
+
+
+
+
 # adicionar uma variável no listar produtos (menu gerente) relacionada ao estoque, para sinalizar a gerencia quando é preciso repor. <=5 repor estoque, >5 and <20 atenção e etc...
 
 # Menu dos relátórios, ajeitar 2. previsão de falta
@@ -25,3 +33,8 @@
     listar funcionarios
     relatórios 
     voltar
+
+# conta temporária
+
+
+# LIMPAR TELA RESOLVER NA HORA DA COMPRA

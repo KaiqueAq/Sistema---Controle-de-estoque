@@ -1,123 +1,143 @@
-# Produtos
 #Estoque
+import vendas as vd, os
+
 produtos = [
-    {'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
-    {'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30,'vendaPorDia': 15},
-    {'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80,'vendaPorDia': 13},
-    {'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20,'vendaPorDia': 8},
-    {'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100,'vendaPorDia': 19}
+    {'codigo': 1, 'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'estoque': 50, 'vendaPorDia': 10},
+    {'codigo': 2, 'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'estoque': 30, 'vendaPorDia': 15},
+    {'codigo': 3, 'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'estoque': 80, 'vendaPorDia': 13},
+    {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'estoque': 20, 'vendaPorDia': 8},
+    {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'estoque': 100, 'vendaPorDia': 19}
 ]
 
-#def gerar_codigo():
-#    if len(produtos) == 0:
- #     return 1
- #   else:
-#        return max(p['codigo'] for p in produtos) + 1
+for produto in produtos:
+    # Cria a nova chave 'lucro' e atribui o resultado de preco - custo
+    produto['lucro'] = produto['preco'] - produto['custo']
 
+produtosComLucro = produtos
+produtosOrdenados = sorted(produtosComLucro, key=lambda x:x['nome'])
+
+def gerar_codigo():
+    if len(produtos) == 0:
+        return 1
+    else:
+        return max(p['codigo'] for p in produtos) + 1
+    
 def adicionar_produto():
     nome = input("Nome do produto: ").lower()
     for p in produtos:
         if p['nome'] == nome:
             input('Produto já existe. Tente novamente.')
             return  
+
     preco = float(input("Preço: "))
     custo = float(input("Custo: "))
+
     while True:
         estoque = int(input("Estoque inicial: "))
         if estoque > 100:
             print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")
-            continue
-        elif estoque <= 100:
+        else:
             break
+
     vendaPorDia = int(input("Venda por dia: "))
+    
+    codigo = gerar_codigo() 
 
     produtos.append({
-        # 'codigo': codigo,
+        'codigo': codigo,
         'nome': nome,
         'preco': preco,
         'custo': custo,
         'estoque': estoque,
         'vendaPorDia': vendaPorDia
     })
-    input("Produto adicionado com sucesso: {codigo} Pressione qualquer tecla.")
+    
+    input(f"Produto adicionado com sucesso! Código do produto: {codigo}. Pressione qualquer tecla.")
 
 def remover_produto():
-    produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
     listar_produtos()
-    codigo = int(input("Digite o código do  produto para remove-lo"))
+    codigo = int(input("Digite o código do produto a remover: "))
     for p in produtos:
         if p['codigo'] == codigo:
             produtos.remove(p)
-            input("Produto removido.")
+            input("Produto removido com sucesso.")
             return
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def atualizar_produto():
-    produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
-
-    nomeAtt = input("\nNome do produto a atualizar: ").lower()
+    listar_produtos_att()
+    codigo = input("\nDigite o código do produto a atualizar (ou sair): ")
+    if codigo == 'sair':
+        return
+    elif codigo.isnumeric():
+        codigo = int(codigo)
     for p in produtos:
-        if p['nome'] == nomeAtt:
-            opcaoDesejada = input('O que você deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
+        if p['codigo'] == codigo:
+            opcaoDesejada = input('O que deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
             if opcaoDesejada == 'preço':
-                precoAtt = float(input('Informe o novo preço: '))
-                p['preco'] = precoAtt
+                p['preco'] = float(input('Novo preço: '))
                 input('Preço atualizado com sucesso.')
-                return
             elif opcaoDesejada == 'custo':
-                custoAtt = float(input('Informe o novo custo: '))
-                p['custo'] = custoAtt
+                p['custo'] = float(input('Novo custo: '))
                 input('Custo atualizado com sucesso.')
-                return
             elif opcaoDesejada == 'estoque':
-                estoqueAtt = int(input('Informe o novo estoque: '))
-                if p['estoque'] + estoqueAtt > 100:
+                novo_estoque = int(input('Novo estoque: '))
+                if novo_estoque > 100:
                     input('Estoque excede o limite.')
                 else:
-                    p['estoque'] = estoqueAtt
+                    p['estoque'] = novo_estoque
                     input('Estoque atualizado com sucesso.')
-                    return
             elif opcaoDesejada == 'vendas por dia':
-                vendaAtt = int(input('Informe a nova quantidade de vendas por dia: '))
-                p['vendaPorDia'] = vendaAtt
-                input('Vendas por dia atualizado com sucesso.')
-                return
+                p['vendaPorDia'] = int(input('Nova venda por dia: '))
+                input('Vendas por dia atualizadas com sucesso.')
             return
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def listar_produtos():
+    produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
+    print("\nProdutos:")
+    for p in produtos_ordenados:
+        print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
+    input('\nDigite qualquer tecla.')
+
+def listar_produtos_att():
+    produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
+    print("\nProdutos:")
+    for p in produtos_ordenados:
+        print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
+
+def ver_produtos():
     produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
     print("\nProdutos:")
     for p in produtos_ordenados:
-        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
-    input('\nDigite qualquer tecla.')
-
-def produtos_mais_vendidos():
-    pass
-    
-def previsao_falta():
-    for p in produtos:
-        diasRestantes =  p['estoque'] / p['vendaPorDia']
-        if diasRestantes <= 3:
-            input(f'O produto {p['nome']} restam {diasRestantes} dias restantes.')
-        elif diasRestantes <= 0:
-            input(f'O produto {p['nome']} está em falta.')
-
+        print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
+        
 def menu_relatorios():
     while True:
-        print("\n=== Relatórios ===")
-        print("1. Produtos mais vendidos")
-        print("2. Previsão de falta")
-        print("3. Voltar")
+        os.system('cls')
+        print("Relatórios")
+        print("[1] Produtos mais vendidos")
+        print("[2] Previsão de falta")
+        print("[3] Voltar")
         opcao = input("Escolha uma opção: ")
         if opcao == '1':
-            produtos_mais_vendidos()
+            vd.maisVendidos(produtosComLucro)
         elif opcao == '2':
-            previsao_falta()
+            vd.previsaoFalta(produtosComLucro)
         elif opcao == '3':
             break
         else:
             input("Opção inválida. Pressione qualquer tecla.")
+
+# def produtos_mais_vendidos():
+#     pass
+    
+# def previsao_falta():
+#     for p in produtos:
+#         diasRestantes =  p['estoque'] / p['vendaPorDia']
+#         if diasRestantes <= 3:
+#             print(f'O produto {p['nome']} restam {diasRestantes} dias restantes.')
+#         elif diasRestantes <= 0:
+#             print(f'O produto {p['nome']} está em falta.')
+#     input('Pressione qualquer tecla para continuar.')
+

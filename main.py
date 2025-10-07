@@ -18,14 +18,15 @@ Atividades Propostas:
 - D. Relatório de produtos mais vendidos.
 - E. Relatório de previsão de falta.
 '''
+import os
 from limparTela import limpaTela
-import produto, clientes, vendas, funcionarios as fc
+import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd
 
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     try:
         limpaTela()
-        opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é funcionário\nDigite [3] se você é Gerente\n[4] Sair.\n'))
+        opcao = int(input('Digite [1] se você é Cliente\nDigite [2] se você é Funcionário\nDigite [3] se você é Gerente\n[4] Sair.\n'))
     except ValueError:
         input('Digite uma opção válida.')
         continue
@@ -34,7 +35,7 @@ while True:
             case 1:
                 while True:
                     limpaTela()
-                    print('Menu Cliente')
+                    print('Menu cliente')
                     print('[1] Comprar')
                     print('[2] Voltar')
                     try:
@@ -46,11 +47,9 @@ while True:
                         match opcao:
                             case 1:
                                 limpaTela()
-                                print('Menu Compra') 
                                 clientes.comprarProduto()
                             case 2:
                                 limpaTela()
-                                print('Voltar')
                                 break
                             case _: 
                                 input('Opção inválida. Pressione qualquer tecla para continuar.')
@@ -95,6 +94,7 @@ while True:
                                             limpaTela()
                                             clientes.listar_clientes(clientes.clientes)
                                         case 5:
+                                            rodando = False
                                             break
                                         case _:
                                             input('Opção inválida. Pressione qualquer tecla para continuar.')
@@ -111,37 +111,46 @@ while True:
                         break
                     senha = input('Senha: ')
                     logou = False
-                    for gerente in fc.gerente:
+                    for gerente in gt.gerenteConta:
                         if gerente['nome'] == usuario and gerente['senha'] == senha:
                             input(f'Olá {usuario}. Login realizado com sucesso.\n')
                             logou = True
-                    limpaTela()
-                    print('Menu Gerente')
-                    print('[1] Atualizar produto')
-                    print('[2] Listar funcionários')
-                    print('[3] Relatórios')
-                    print('[4] Voltar')
-                    try:
-                        opcao = int(input('Digite a opção desejada: '))
-                    except ValueError:
-                        input('Digite uma opção válida.')
-                        continue
-                    else:
-                        match opcao:
-                            case 1:
+                            while True:
                                 limpaTela()
-                                produto.atualizar_produto()
-                            case 2:
-                                limpaTela()
-                                fc.atualizar_funcionarios(fc.funcionarios)
-                            case 3:
-                                limpaTela()
-                                produto.menu_relatorios()
-                            case 4:
-                                break
-                            case _:
-                                input('Opção inválida. Pressione qualquer tecla para continuar.')
-                                continue
+                                print('Menu Gerente')
+                                print('[1] Atualizar produto')
+                                print('[2] Listar funcionários')
+                                print('[3] Atualizar funcionários')
+                                print('[4] Relatórios')
+                                print('[5] Voltar')
+                                try:
+                                    opcao = int(input('Digite a opção desejada: '))
+                                except ValueError:
+                                    input('Digite uma opção válida.')
+                                    continue
+                                else:
+                                    match opcao:
+                                        case 1:
+                                            limpaTela()
+                                            produto.atualizar_produto()
+                                        case 2:
+                                            limpaTela()
+                                            fc.listar_funcionarios(fc.funcionarios)
+                                        case 3:
+                                            gt.atualizar_funcionarios(gt.funcionarios)
+                                        case 4:
+                                            limpaTela()
+                                            produto.menu_relatorios()
+                                        case 5:
+                                            rodando = False
+                                            break
+                                        case _:
+                                            input('Opção inválida. Pressione qualquer tecla para continuar.')
+                                            continue
+                    if logou == False:
+                        input('Login inválido. Pressione qualquer tecla para continuar.')
+                        limpaTela()
+                        continue  
             case 4:
                 input('Saindo...')
                 break

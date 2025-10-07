@@ -1,6 +1,6 @@
 #Cadastramento
-import produto as pd
-import funcionarios as fc
+import os
+import produto as pd, funcionarios as fc, datetime, limparTela as lt, vendas as vd, time
 
 clientes = [
     {'nome': 'JOÃO ALMEIDA DE SOUZA', 'idade': 21, 'cpf': '906.526.200-86'},
@@ -61,74 +61,204 @@ def remover_cliente():
             print(f"\n Cliente {nome_remover} removido com sucesso!")
             return
     print(f"\n Cliente {nome_remover} não encontrado.")
-import os
-
-#while True:
-#    print("\n1. Cadastrar Novo Cliente")
-#    print("2. Listar Clientes")
-#    print("3. Remover Cliente")
-#    print("4. Sair")
-#    opcao = input("Escolha uma opção: ")
-#    if opcao == '1':
-#        cadastrar_cliente()
-#    elif opcao == '2':
-#        listar_clientes()
-#    elif opcao == '3':
-#        remover_cliente()
-#    elif opcao == '4':
-#        print("Saindo do sistema...")
-#        break
-#    else:
-#        print("Opção inválida. Digite 1, 2, 3 ou 4.")
 
 def comprarProduto():
-    produtos_ordenados = sorted(pd.produtos, key=lambda x: x['nome'])
-    print("\nProdutos:")
-    for p in produtos_ordenados:
-        print(f"{p['nome']} - Preço: {p['preco']} - Custo: {p['custo']} - Estoque: {p['estoque']} - Vendas por dia: {p['vendaPorDia']}")
- 
-    while True:
-        try:
-            qntsProdutos = int(input('Quantos produtos diferentes deseja comprar? '))
-            for _ in range(qntsProdutos):
-                qualProduto = input('\nQual produto deseja comprar? ')
+    try:
+        qntsProdutos = int(input('Quantos produtos diferentes deseja comprar? '))
+    except ValueError:
+        input("Entrada inválida. Por favor, digite um número. Pressione qualquer tecla para continuar.")
+    else:
+        for i in range(qntsProdutos):
+            print("\nProdutos:")
+            for p in pd.produtosOrdenados:
+                print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
+            qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower() 
 
-                for i in pd.produtos:
-                    if i['nome'] == qualProduto:
-                        qualQntd = int(input('Informe a quantidade desejada: '))
-                        if qualQntd > i['estoque']:
-                            input('Estoque não supre o pedido.')
-                        elif qualQntd <= i['estoque']:
-                            i['estoque'] -= qualQntd
-                            
-                            for c in p:
-                                nova_venda = [
-                                {
-                                'cliente_cpf': None,
-                                'produtos': [
-                                    {'nome': qualProduto, 'quantidade': qualQntd},
-                                    {'nome': 'Feijão', 'quantidade': 1}
-                                ],
-                                'total': 18.00,
-                                'lucro': c['lucro'],
-                                'data': '2023-10-01'
-                                }
-                            ]
+            pdEncontrado = None
+
+            # Procura o produto na nossa lista de na outra página produto.py
+            for p in pd.produtosComLucro:
+                if p['nome'] == qualProduto:
+                    pdEncontrado = p
+                    break
+
+            # Se após o for a gente não achar o produto, a parece uma mensagem e já vai pro próximo item do for
+            if pdEncontrado == None:
+                input(f'Produto "{qualProduto}" não encontrado. Pressione qualquer tecla para continuar.')
+                continue
+
+            # Se achar o produto ele pede a quantidade
+            qualQntd = int(input(f'Informe a quantidade de {qualProduto} desejada: '))
+            
+            if qualQntd <= 0:
+                print("Quantidade inválida.")
+                continue
+
+            # Se a quantidade for maior que o estoque do produto pedido, manda uma mensagemd e erro
+            if qualQntd > pdEncontrado['estoque']:
+                print(f'Estoque não supre o pedido. Temos apenas {pdEncontrado["estoque"]} unidades.')
+                continue
+            else:
+                # Se não for, diminui do estoque
+                pdEncontrado['estoque'] -= qualQntd
+                
+            # Calcula o subTotal e o lucro do item
+            subTotal = pdEncontrado['preco'] * qualQntd
+            lucroItem = pdEncontrado['lucro'] * qualQntd
+
+            if pdEncontrado['estoque'] == 0:
+                # O .remove() modifica a lista diretamente. Não precisa atribuir a uma variável.
+                pd.produtosComLucro.remove(pdEncontrado)
+                print(f'Adicionado ao carrinho. Estoque de {qualProduto} zerado. Produto removido do sistema.')
+            else:
+                print(f'Adicionado ao carrinho. Estoque restante: {pdEncontrado["estoque"]} unidades.')
+
+            # Adiciona o item ao nosso carrinho temporário
+            vd.carrinhoDeCompra.append({
+                'nome': qualProduto,
+                'quantidade': qualQntd,
+                'subTotal': subTotal
+            })
+            
+            # Atualiza os totais da venda
+            vd.totalDeVenda += subTotal
+            vd.lucroDaVenda += lucroItem
+        
+        # DEPOIS que o loop terminar, se o carrinho não estiver vazio, finalize a venda
+            if vd.carrinhoDeCompra:
+                # Pega o CPF do cliente (poderia ser feito no início)
+                cpfCliente = input("\nInforme o seu CPF: (opcional)")
+                if cpfCliente:
+                    cpfCliente = cpfCliente
+                else:
+                    cpfCliente = None
+                
+            # Cria o dicionário da nova venda com os dados acumulados
+            nova_venda = {
+                'cliente_cpf': cpfCliente,
+                'produtos': vd.carrinhoDeCompra,
+                'total': vd.totalDeVenda,
+                'lucro': vd.lucroDaVenda,
+                'data': datetime.date.today().isoformat() # Pega a data atual
+            }
+
+            # Adiciona a venda finalizada na lista principal
+            vd.vendas.append(nova_venda)
+            os.system('cls')
+            print("\nA compra foi realizada com Sucesso!")
+            print(f"\nCPF do Cliente: {nova_venda['cliente_cpf']}")
+            print("\nProdutos Comprados:")
+            for item in nova_venda['produtos']:
+                print(f"| {item['nome']}, quantidade: {item['quantidade']}, Subtotal: R${item['subTotal']:.2f} |")
+            input(f"TOTAL DA VENDA: R${nova_venda['total']:.2f}")
+            lt.limpaTela()
+        else:
+            print("\nNenhum produto foi adicionado ao carrinho. Compra não realizada")
 
 
-                            
+   
+    #     qntsProdutos = int(input('Quantos produtos diferentes deseja comprar? '))
+    # except ValueError:
+    #     input("Entrada inválida. Por favor, digite um número. Pressione qualquer tecla para continuar.")
+    # else:
+    #     venda_realizada = False
 
-                            input(f'Compra realizada com sucesso. Restam {i['estoque']} unidades.')
-                            if i['estoque'] <= 0:
-                                pd.produtos.remove(i)
-                                input('Estoque zerado. Produto removido.')
-                                return
-                            return
-        except ValueError:
-            input('Informação inválida. Tente novamente.')
-            continue
-                    
-        if i['nome'] != qualProduto:
-            input('Inválido. Tente novamente.')
-            continue
+    #     for i in range(qntsProdutos):
+    #         print("\nProdutos Disponíveis:")
+    #         # É uma boa prática mostrar a lista atualizada a cada iteração
+    #         for p in pd.produtosComLucro: # Supondo que esta seja sua lista principal
+    #             print(f"- {p['nome'].title()} | Preço: R${p['preco']:.2f} | Estoque: {p['estoque']}")
+            
+    #         qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower().strip()
 
+    #         pdEncontrado = None
+    #         # Procura o produto na lista
+    #         for p in pd.produtosComLucro:
+    #             if p['nome'] == qualProduto:
+    #                 pdEncontrado = p
+    #                 break
+
+    #         if not pdEncontrado:
+    #             input(f'Produto "{qualProduto}" não encontrado. Pressione qualquer tecla para continuar.')
+    #             continue
+
+    #         try:
+    #             qualQntd = int(input(f'Informe a quantidade de "{qualProduto}" desejada: '))
+    #         except ValueError:
+    #             print("Quantidade inválida. Digite um número.")
+    #             continue
+            
+    #         if qualQntd <= 0:
+    #             print("Quantidade deve ser maior que zero.")
+    #             continue
+
+    #         # 1. Verifica se tem estoque suficiente
+    #         if qualQntd > pdEncontrado['estoque']:
+    #             print(f'Estoque não supre o pedido. Temos apenas {pdEncontrado["estoque"]} unidades.')
+    #         else:
+    #             # 2. Se tem estoque, a venda acontece. Processa os dados.
+    #             venda_realizada = True # Marca que pelo menos um item foi adicionado
+                
+    #             # Calcula o subTotal e o lucro do item
+    #             subTotal = pdEncontrado['preco'] * qualQntd
+    #             lucroItem = pdEncontrado['lucro'] * qualQntd
+
+    #             # Adiciona o item ao carrinho
+    #             vd.carrinhoDeCompra.append({
+    #                 'nome': qualProduto,
+    #                 'quantidade': qualQntd,
+    #                 'subTotal': subTotal
+    #             })
+                
+    #             # Atualiza os totais da venda
+    #             vd.totalDeVenda += subTotal
+    #             vd.lucroDaVenda += lucroItem
+
+    #             # ATUALIZA O ESTOQUE
+    #             pdEncontrado['estoque'] -= qualQntd
+                
+    #             print(f'"{qualProduto}" foi adicionado ao carrinho.')
+
+    #             # 3. AGORA, verifica se o estoque zerou para remover o produto
+                
+
+
+                
+
+    #         # DEPOIS que o loop terminar, se o carrinho não estiver vazio, finalize a venda
+    #         if venda_realizada:
+    #             # Pega o CPF do cliente
+    #             if vd.carrinhoDeCompra:
+    #                 cpfCliente = input("\nInforme o seu CPF: (opcional)")
+    #                 if cpfCliente:
+    #                     cpfCliente = cpfCliente
+    #                 else:
+    #                     cpfCliente = None
+
+    #             # Cria o dicionário da nova venda com os dados acumulados
+    #             nova_venda = {
+    #                 'cliente_cpf': cpfCliente,
+    #                 'produtos': vd.carrinhoDeCompra,
+    #                 'total': vd.totalDeVenda,
+    #                 'lucro': vd.lucroDaVenda,
+    #                 'data': datetime.date.today().isoformat()
+    #             }
+
+    #             # Adiciona a venda finalizada à sua lista principal
+    #             vd.vendas.append(nova_venda)
+                
+    #             # Limpa o carrinho e totais para a próxima venda
+    #             # vd.carrinhoDeCompra.clear()
+    #             # vd.totalDeVenda = 0.0
+    #             # vd.lucroDaVenda = 0.0
+                
+    #             os.system('cls')
+    #             print("\n--- Compra Realizada com Sucesso! ---")
+    #             print(f"CPF do Cliente: {nova_venda['cliente_cpf']}")
+    #             print("Produtos Comprados:")
+    #             for item in nova_venda['produtos']:
+    #                 print(f"  - {item['nome']}, Quantidade: {item['quantidade']}, Subtotal: R${item['subTotal']:.2f}")
+    #             input(f"\nTOTAL DA VENDA: R${nova_venda['total']:.2f}\n\nPressione Enter para continuar...")
+    #             # lt.limpaTela()
+    #         else:
+    #             print("\nNenhum produto foi adicionado ao carrinho. Compra não realizada.")
