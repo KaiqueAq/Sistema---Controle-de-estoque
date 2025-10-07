@@ -28,11 +28,15 @@ def maisVendidos(produtosComLucro):
     os.system('cls')
     mais_vendidos = sorted(produtosComLucro, key=lambda p: p['vendaPorDia'], reverse=True)
 
-    print("PRODUTOS MAIS VENDIDOS")
-    print("Ranking por média de vendas diárias:\n")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_")
+    print("|       PRODUTOS MAIS VENDIDOS       |")
+    print("*+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=*")
+    print("\nRanking por média de vendas diárias:")
+    print(' _________________________________________')
+    print('| Colocação |     Produto     | Venda/dia |')
     for i, produto in enumerate(mais_vendidos, start=1):
-        # O f-string formata a saída de forma legível
-        print(f"{i}º lugar: {produto['nome']} ({produto['vendaPorDia']} vendas/dia)")
+        print(f"|   {i:>3}º    | {produto['nome']:<16}|{produto['vendaPorDia']:^11}|")
+    print('*=========================================*')
     input('\nPressione qualquer tecla para continuar.')
 
 
@@ -42,21 +46,27 @@ def maisVendidos(produtosComLucro):
 # Isso nos dá o número de dias restantes para o estoque acabar.
 # Não usamos 'reverse=True' porque queremos ver os que acabarão PRIMEIRO.
 # Adicionamos uma verificação para evitar divisão por zero se um produto não vender.
-def previsaoFalta(produtosComLucro):
+def previsaoFalta(pds):
     os.system('cls')
-    previsao_falta = sorted(produtosComLucro, key=lambda p: p['estoque'] / p['vendaPorDia'] if p['vendaPorDia'] > 0 else float('inf')
+    previsao_falta = sorted(pds, key=lambda p: p['estoque'] / p['vendaPorDia'] if p['vendaPorDia'] > 0 else float('inf')
     )
 
-    print("\nPREVISÃO DE FALTA DE ESTOQUE")
-    print("Produtos com maior risco de esgotamento:\n")
+    print("_+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_")
+    print("|     PREVISÃO DE FALTA DE ESTOQUE     |")
+    print("*+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=*")
+    print("\nProdutos com maior risco de esgotamento:")
+    print(' _______________________________________________________________')
+    print('|     Produto     | Estoque aproximado | Em estoque | Venda/dia |')
     for produto in previsao_falta:
         if produto['vendaPorDia'] > 0:
 
-            # math.floor() arredonda o número de dias para baixo
+            # Aqui tava dando número quebrado as vezes, aí usamos a biblioteca de matemática pra arredondar o número de dias para baixo
             dias_restantes = math.floor(produto['estoque'] / produto['vendaPorDia'])
-            print(f"○ {produto['nome']}: Estoque para aproximadamente {dias_restantes} dias ({produto['estoque']} un. / {produto['vendaPorDia']} un. por dia)")
+            print(f"|{produto['nome']:<17}|     {dias_restantes:>3} dias       | {produto['estoque']:>5} un.  |{produto['vendaPorDia']:>5} un.  |")
         else:
-            print(f"○ {produto['nome']}: Sem vendas diárias, não há previsão de falta.")
+            print('*---------------------------------------------------------------*')
+            print(f"|{produto['nome']:<17}|Sem vendas diárias, não há previsão de falta.|")
+    print('*---------------------------------------------------------------*')
     input('\nPressione qualquer tecla para continuar.')
 
 

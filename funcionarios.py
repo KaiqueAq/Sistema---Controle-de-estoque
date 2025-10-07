@@ -5,15 +5,16 @@ import produto as pd
 #     print(funcionarios_ordenados)
 
 def listar_funcionarios(funcionarios):
-    print("Lista de funcionarios do Mercado atualizada")
     funcionarios_ordenados = sorted(funcionarios, key=lambda x: x['nome'])
-    print('=+'*23)
-    print('|QUADRO DE FUNCIONÁRIOS                      |')
-    print('=+'*23)
+    print('_=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+_')
+    print('|     QUADRO DE FUNCIONÁRIOS ATUALIZADO      |')
+    print('*--------------------------------------------*')
+    print('\n ____________________________________________ ')
     for i in funcionarios_ordenados:
         print(f"|Nome: {i['nome']:<19} | Idade: {i['idade']:<3} anos.|")
-        print('=+'*23)
-    input('\nDigite qualquer tecla.')
+        print('*--------------------------------------------*')
+
+    input('\nPressione qualquer tecla.')
 
 funcionarios = [
     {'nome': 'JULIANA EVANGELISTA', 'idade': 21, 'senha': '1234'},

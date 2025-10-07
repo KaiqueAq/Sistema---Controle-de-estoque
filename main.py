@@ -67,14 +67,18 @@ while True:
             case 2:  
                 rodando = True
                 while rodando:
-                    usuario = input('Usuário (ou sair): ')
+                    limpaTela()
+                    print(' ----------------')
+                    print('|   Menu Login   |')
+                    print('*----------------*')
+                    usuario = input('- Usuário (ou sair): ')
                     if usuario == 'sair':
                         break
-                    senha = input('Senha: ')
+                    senha = input('- Senha: ')
                     logou = False
                     for funcionario in fc.funcionarios:
                         if funcionario['nome'] == usuario and funcionario['senha'] == senha:
-                            input(f'Olá {usuario}. Login realizado com sucesso.\n')
+                            input(f'\nOlá {usuario}. Login realizado com sucesso.\nEntrando no sistema...')
                             logou = True
                             while True:
                                 limpaTela()
@@ -85,7 +89,7 @@ while True:
                                 print('|[2] Listar produtos   |')
                                 print('|[3] Remover produto   |')
                                 print('|[4] Listar clientes   |')
-                                print('|[5] Voltar            |')
+                                print('|[5] Logout            |')
                                 print('*=+=+=+=+=+=+=+=+=+=+=+*')
                                 try:
                                     opcao = int(input('Digite a opção desejada: '))
@@ -113,20 +117,24 @@ while True:
                                             input('Opção inválida. Pressione qualquer tecla para continuar.')
                                             continue
                     if logou == False:
-                        input('Login inválido. Pressione qualquer tecla para continuar.')
+                        input('\nLogin inválido. Pressione qualquer tecla para continuar.')
                         limpaTela()
                         continue   
             case 3:
                 rodando = True
                 while rodando:
-                    usuario = input('Usuário (ou sair): ')
+                    limpaTela()
+                    print(' ----------------')
+                    print('|   Menu Login   |')
+                    print('*----------------*')
+                    usuario = input('- Usuário (ou sair): ')
                     if usuario == 'sair':
                         break
-                    senha = input('Senha: ')
+                    senha = input('- Senha: ')
                     logou = False
                     for gerente in gt.gerenteConta:
                         if gerente['nome'] == usuario and gerente['senha'] == senha:
-                            input(f'Olá {usuario}. Login realizado com sucesso.\n')
+                            input(f'\nOlá {usuario}. Login realizado com sucesso.\nEntrando no sistema...')
                             logou = True
                             while True:
                                 limpaTela()
@@ -137,7 +145,7 @@ while True:
                                 print('|[2] Listar funcionários   |')
                                 print('|[3] Atualizar funcionários|')
                                 print('|[4] Relatórios            |')
-                                print('|[5] Voltar                |')
+                                print('|[5] Logout                |')
                                 print('*=+=+=+=+=+=+=+=+=+=+=+=+=+*')
                                 try:
                                     opcao = int(input('Digite a opção desejada: '))
@@ -164,11 +172,11 @@ while True:
                                             input('Opção inválida. Pressione qualquer tecla para continuar.')
                                             continue
                     if logou == False:
-                        input('Login inválido. Pressione qualquer tecla para continuar.')
+                        input('\nLogin inválido. Pressione qualquer tecla para continuar.')
                         limpaTela()
                         continue  
             case 4:
-                print('Saindo...')
+                print('\nSaindo do programa...')
                 time.sleep(2)
                 break
             case _:

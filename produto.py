@@ -10,9 +10,9 @@ produtos = [
     {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'lucro': 0.70, 'estoque': 20, 'vendaPorDia': 8},
     {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'lucro': 0.50, 'estoque': 100, 'vendaPorDia': 19}
 ]
-# produtos.sort(key=lambda x:x['nome'])
-produtosOrdenados = sorted(produtos, key=lambda x:x['nome'])
-produtosOrdemPeloCod = sorted(produtosOrdenados, key=lambda x:x['codigo'])
+produtos.sort(key=lambda x:x['codigo'])
+# produtosOrdenados = sorted(produtos, key=lambda x:x['nome'])
+# produtosOrdemPeloCod = sorted(produtosOrdenados, key=lambda x:x['codigo'])
 
 def gerar_codigo():
     if len(produtos) == 0:
@@ -70,7 +70,7 @@ def atualizar_produto():
         return
     elif codigo.isnumeric():
         codigo = int(codigo)
-    for p in produtosOrdenados:
+    for p in produtos:
         if p['codigo'] == codigo:
             opcaoDesejada = input('O que deseja atualizar? [preço] / [custo] / [estoque] / [vendas por dia]: ').lower()
             if opcaoDesejada == 'preço':
@@ -102,8 +102,9 @@ def listar_produtos():
     input('\nPressione qualquer tecla para continuar.')
         
 def ver_produtos():
+    produtosOrdemNome = sorted(produtos, key=lambda x:x['nome'])
     print('Produtos:')
-    for p in produtosOrdenados:
+    for p in produtosOrdemNome:
         print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
 
 def listar_produtos_att():
@@ -115,25 +116,7 @@ def listar_produtos_att():
     print('===============================================================================')
 
 
-# def listar_produtos():
-#     produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
-#     print("\nProdutos:")
-#     for p in produtos_ordenados:
-#         print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
-#     input('\nDigite qualquer tecla.')
 
-# def listar_produtos_att():
-#     produtos_ordenados = sorted(produtos, key=lambda x: x['codigo'])
-#     print("\nAtualizando produtos:")
-#     for p in produtos_ordenados:
-#         print(f"Código: {p['codigo']} | Nome: {p['nome']} | Preço: {p['preco']} | Custo: {p['custo']} | Estoque: {p['estoque']} | Vendas/dia: {p['vendaPorDia']}")
-
-# def ver_produtos():
-#     produtos_ordenados = sorted(produtos, key=lambda x: x['nome'])
-#     print("\nProdutos:")
-#     for p in produtos_ordenados:
-#         print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
-        
 def menu_relatorios():
     while True:
         os.system('cls')
@@ -146,9 +129,9 @@ def menu_relatorios():
         print('*=+=+=+=+=+=+=+=+=+=+=+=+=+*')
         opcao = input("Escolha uma opção: ")
         if opcao == '1':
-            vd.maisVendidos(produtosOrdenados)
+            vd.maisVendidos(produtos)
         elif opcao == '2':
-            vd.previsaoFalta(produtosOrdenados)
+            vd.previsaoFalta(produtos)
         elif opcao == '3':
             break
         else:

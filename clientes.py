@@ -46,12 +46,17 @@ def cadastro_nomes(cliente):
     return cliente['nome']
 
 def listar_clientes(clientes):
-    print("Lista de clientes do Mercado atualizada")
     clientes_ordenados = sorted(clientes, key=lambda x: x['nome'])
-    print("\nClientes:")
+    print('_=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=_')
+    print('|         LISTA DE CLIENTES DO MERCADO ATUALIZADA           |')
+    print('*-----------------------------------------------------------*\n')
+    print(' ___________________________________________________________ ')
+    print('|             Nome              |  idade  |       CPF       |')
+    print('*-----------------------------------------------------------*')
     for i in clientes_ordenados:
-        print(f"{i['nome']} - {i['idade']} aos - CPF {i['cpf']} ")
-    input('\nDigite qualquer tecla.')
+        print(f"|{i['nome']:<31}|{i['idade']:>3} anos |{i['cpf']:<17}|")
+    print('*-----------------------------------------------------------*')
+    input('\nPressione qualquer tecla.')
 
 def remover_cliente():
     nome_remover = input("Digite o nome do cliente a ser removido: "). upper()
@@ -69,15 +74,17 @@ def comprarProduto():
         input("Entrada inválida. Por favor, digite um número. Pressione qualquer tecla para continuar.")
     else:
         for i in range(qntsProdutos):
+
             print("\nProdutos:")
-            for p in pd.produtosOrdenados:
+            pd.produtos.sort(key=lambda x:x['nome'])
+            for p in pd.produtos:
                 print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
             qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower() 
 
             pdEncontrado = None
 
             # Procura o produto na nossa lista de na outra página produto.py
-            for p in pd.produtosOrdenados:
+            for p in pd.produtos:
                 if p['nome'] == qualProduto:
                     pdEncontrado = p
                     break
@@ -108,7 +115,7 @@ def comprarProduto():
 
             if pdEncontrado['estoque'] == 0:
                 # O .remove() modifica a lista diretamente. Não precisa atribuir a uma variável.
-                pd.produtosOrdenados.remove(pdEncontrado)
+                pd.produtos.remove(pdEncontrado)
                 print(f'Adicionado ao carrinho. Estoque de {qualProduto} zerado. Produto removido do sistema.')
             else:
                 print(f'Adicionado ao carrinho. Estoque restante: {pdEncontrado["estoque"]} unidades.')
