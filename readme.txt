@@ -1,7 +1,8 @@
 - ATUALIZAÇÃO DE FUNCIONÁRIOS
-- QUANDO CRIA PRODUTOS TRATAR ESTOQUE 0
-- LAYTOUT DE LISTAR CLIENTES (FUNCIONÁRIO)
-- LAYOUT DE COMPRAR PRODUTOS (CLIENTE)
+✔ QUANDO CRIA PRODUTOS TRATAR ESTOQUE 0
+✔ LAYTOUT DE LISTAR CLIENTES (FUNCIONÁRIO)
+✔ LAYOUT DE COMPRAR PRODUTOS (CLIENTE)
+
 
 
 # adicionar uma variável no listar produtos (menu gerente) relacionada ao estoque, para sinalizar a gerencia quando é preciso repor. <=5 repor estoque, >5 and <20 atenção e etc...

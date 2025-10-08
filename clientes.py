@@ -74,11 +74,14 @@ def comprarProduto():
         input("Entrada inválida. Por favor, digite um número. Pressione qualquer tecla para continuar.")
     else:
         for i in range(qntsProdutos):
-
-            print("\nProdutos:")
             pd.produtos.sort(key=lambda x:x['nome'])
+            lt.limpaTela()
+            print(' ______________________________________')
+            print('|       Nome       |  Preço  | Estoque |')
+            print('*--------------------------------------*')
             for p in pd.produtos:
-                print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
+                print(f"|{p['nome']:<18}| R${p['preco']:<5.2f} |{p['estoque']:>6}   |")
+            print('*--------------------------------------*')    
             qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower() 
 
             pdEncontrado = None

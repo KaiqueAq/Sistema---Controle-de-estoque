@@ -33,7 +33,9 @@ def adicionar_produto():
     while True:
         estoque = int(input("Estoque inicial: "))
         if estoque > 100:
-            print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")
+            print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")         
+        elif estoque == 0:
+            print("Erro: Não é possível adicionar estoque vazio. Tente novamente.")
         else:
             break
 
@@ -94,11 +96,11 @@ def atualizar_produto():
 
 def listar_produtos():
     print('Produtos:')
-    print('______________________________________________________________________________')
+    print(' ____________________________________________________________________________')
     print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Venda/dia |')
     for p in produtos:
-        print(f"|{p['codigo']:^5}|{p['nome']:^18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:^9}|{p['vendaPorDia']:^11}|")
-    print('==============================================================================')
+        print(f"|{p['codigo']:^5}|{p['nome']:<18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:>6}   | {p['vendaPorDia']:>6}    |")
+    print('*============================================================================*')
     input('\nPressione qualquer tecla para continuar.')
         
 def ver_produtos():
@@ -114,8 +116,6 @@ def listar_produtos_att():
     for p in produtos:
         print(f"|{p['codigo']:^5}|{p['nome']:^18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:^9}|{p['vendaPorDia']:^12}|")
     print('===============================================================================')
-
-
 
 def menu_relatorios():
     while True:
@@ -136,16 +136,3 @@ def menu_relatorios():
             break
         else:
             input("Opção inválida. Pressione qualquer tecla.")
-
-# def produtos_mais_vendidos():
-#     pass
-    
-# def previsao_falta():
-#     for p in produtos:
-#         diasRestantes =  p['estoque'] / p['vendaPorDia']
-#         if diasRestantes <= 3:
-#             print(f'O produto {p['nome']} restam {diasRestantes} dias restantes.')
-#         elif diasRestantes <= 0:
-#             print(f'O produto {p['nome']} está em falta.')
-#     input('Pressione qualquer tecla para continuar.')
-

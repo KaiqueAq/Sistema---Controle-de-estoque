@@ -62,13 +62,10 @@ def previsaoFalta(pds):
 
             # Aqui tava dando número quebrado as vezes, aí usamos a biblioteca de matemática pra arredondar o número de dias para baixo
             dias_restantes = math.floor(produto['estoque'] / produto['vendaPorDia'])
-            print(f"|{produto['nome']:<17}|     {dias_restantes:>3} dias       | {produto['estoque']:>5} un.  |{produto['vendaPorDia']:>5} un.  |")
+            print(f"|{produto['nome']:<17}|     {dias_restantes:>3} dias       | {produto['estoque']:>5} un.  |{produto['vendaPorDia']:5} un.  |")
         else:
             print('*---------------------------------------------------------------*')
             print(f"|{produto['nome']:<17}|Sem vendas diárias, não há previsão de falta.|")
     print('*---------------------------------------------------------------*')
     input('\nPressione qualquer tecla para continuar.')
-
-
-
 

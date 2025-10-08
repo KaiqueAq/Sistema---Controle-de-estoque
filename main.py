@@ -76,7 +76,7 @@ while True:
                         break
                     senha = input('- Senha: ')
                     logou = False
-                    for funcionario in fc.funcionarios:
+                    for funcionario in fc.funcionarios_2:
                         if funcionario['nome'] == usuario and funcionario['senha'] == senha:
                             input(f'\nOlá {usuario}. Login realizado com sucesso.\nEntrando no sistema...')
                             logou = True
@@ -159,9 +159,9 @@ while True:
                                             produto.atualizar_produto()
                                         case 2:
                                             limpaTela()
-                                            fc.listar_funcionarios(fc.funcionarios)
+                                            fc.listar_funcionarios(fc.funcionarios_2)
                                         case 3:
-                                            gt.atualizar_funcionarios(gt.funcionarios)
+                                            gt.atualizar_funcionarios(fc.funcionarios_2)
                                         case 4:
                                             limpaTela()
                                             produto.menu_relatorios()
