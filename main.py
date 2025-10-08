@@ -83,7 +83,7 @@ while True:
                     senha = input('- Senha: ')
                     logou = False
                     for funcionario in fc.funcionarios:
-                        if funcionario['nome'] == usuario and funcionario['senha'] == senha:
+                        if (funcionario['nome'] == usuario and funcionario['senha'] == senha):
                             input(f'\nOlá {usuario}. Login realizado com sucesso.\nEntrando no sistema...')
                             logou = True
                             while True:

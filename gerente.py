@@ -6,7 +6,7 @@ import os, funcionarios as fc
 
 gerenteConta = [
      {'nome': 'WHASHINGTON', 'senha': '1'},
-     {'nome': '10', 'senha': '10'}
+     {'nome': '1', 'senha': '1'}
 ]
 
 def contasDisponiveis():
