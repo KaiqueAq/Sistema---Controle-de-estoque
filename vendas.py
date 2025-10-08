@@ -18,8 +18,6 @@ lucroDaVenda = 0
 #      }
 # ]
 
-# --- 1. RELATÓRIO DE PRODUTOS MAIS VENDIDOS ---
-
 # Usamos a função sorted() para criar uma NOVA lista ordenada.
 # O 'key' diz ao Python para ordenar com base no valor de 'vendaPorDia'.
 # 'reverse=True' ordena do maior para o menor.
@@ -39,8 +37,6 @@ def maisVendidos(produtosComLucro):
     print('*=========================================*')
     input('\nPressione qualquer tecla para continuar.')
 
-
-# --- 2. RELATÓRIO DE PREVISÃO DE FALTA DE ESTOQUE ---
 
 # Aqui, a chave de ordenação é o resultado da divisão do estoque pela venda diária.
 # Isso nos dá o número de dias restantes para o estoque acabar.

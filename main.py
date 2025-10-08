@@ -23,17 +23,23 @@ import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd, os, t
 
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
+    limpaTela()
+    print('_=+=+=+=+=+=+=+=+=+=+_')
+    print('| SISTEMA DE MERCADO |')
+    print('*--------------------*')
+    print('|[1] Cliente         |')
+    print('|[2] Funcionário     |')
+    print('|[3] Gerente         |')
+    print('|[4] Sair            |')
+    print('*=+=+=+=+=+=+=+=+=+=+*')
+    entrada = input('Digite a opção desejada: ')
+    if entrada == 'acc':
+        gt.contasDisponiveis()
+        input("\nPressione Enter para voltar.")
+        continue
+
     try:
-        limpaTela()
-        print('_=+=+=+=+=+=+=+=+=+=+_')
-        print('| SISTEMA DE MERCADO |')
-        print('*--------------------*')
-        print('|[1] Cliente         |')
-        print('|[2] Funcionário     |')
-        print('|[3] Gerente         |')
-        print('|[4] Sair            |')
-        print('*=+=+=+=+=+=+=+=+=+=+*')
-        opcao = int(input('Digite a opção desejada: '))
+        opcao = int(entrada)
     except ValueError:
         input('Digite uma opção válida.')
         continue
@@ -71,12 +77,12 @@ while True:
                     print(' ----------------')
                     print('|   Menu Login   |')
                     print('*----------------*')
-                    usuario = input('- Usuário (ou sair): ')
-                    if usuario == 'sair':
+                    usuario = input('- Usuário (ou sair): ').upper()
+                    if usuario == 'SAIR':
                         break
                     senha = input('- Senha: ')
                     logou = False
-                    for funcionario in fc.funcionarios_2:
+                    for funcionario in fc.funcionarios:
                         if funcionario['nome'] == usuario and funcionario['senha'] == senha:
                             input(f'\nOlá {usuario}. Login realizado com sucesso.\nEntrando no sistema...')
                             logou = True
@@ -127,8 +133,8 @@ while True:
                     print(' ----------------')
                     print('|   Menu Login   |')
                     print('*----------------*')
-                    usuario = input('- Usuário (ou sair): ')
-                    if usuario == 'sair':
+                    usuario = input('- Usuário (ou sair): ').upper()
+                    if usuario == 'SAIR':
                         break
                     senha = input('- Senha: ')
                     logou = False
@@ -159,9 +165,9 @@ while True:
                                             produto.atualizar_produto()
                                         case 2:
                                             limpaTela()
-                                            fc.listar_funcionarios(fc.funcionarios_2)
+                                            fc.listar_funcionarios(fc.funcionarios)
                                         case 3:
-                                            gt.atualizar_funcionarios(fc.funcionarios_2)
+                                            gt.atualizar_funcionarios(fc.funcionarios)
                                         case 4:
                                             limpaTela()
                                             produto.menu_relatorios()

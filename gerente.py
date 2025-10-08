@@ -1,26 +1,40 @@
-import os, funcionarios as ff
+import os, funcionarios as fc
 
 #def atualizar_gerente(func):
 #    gerente_ordenados = sorted(func, key=lambda x: x['nome'].lower())
 #    input(gerente_ordenados)
 
 gerenteConta = [
-     {'nome': '1', 'senha': '1'}
-     ]
-
-funcionarios = [
-    {'nome': 'JULIANA EVANGELISTA', 'senha': '1234'},
-    {'nome': 'RAFAEL PIRÔPO', 'senha': '1414'},
-    {'nome': 'KAIQUE AQUINO', 'senha': '1515'},
-    {'nome': 'HUDSON COIMBRA', 'senha': '1616'},
-    {'nome': '0', 'senha': '0'}
+     {'nome': 'WHASHINGTON', 'senha': '1'},
+     {'nome': '10', 'senha': '10'}
 ]
+
+def contasDisponiveis():
+    os.system('cls')
+    print('_=+=+=+=+=+=+=+=+=+=+=+=_')
+    print('| HACKER PROMPT DISPLAY |')
+    print('*-----------------------*')
+    print('Contas disponíveis (Gerência): ')
+    print(' ________________________________')
+    print('|       Usuário       | Password |')
+    print('*--------------------------------*')
+    for c in gerenteConta:
+        print(f'|{c['nome']:<21}|{c['senha']:^10}|')
+    print('*--------------------------------*')
+
+    print('\nContas disponíveis (Funcionários): ')
+    print(' ________________________________')
+    print('|       Usuário       | Password |')
+    print('*--------------------------------*')
+    for f in fc.funcionarios:
+        print(f'|{f['nome']:<21}|{f['senha']:^10}|')
+    print('*--------------------------------*')
 
 def atualizar_funcionarios(funcionario):
     while True:
         os.system('cls')
 
-        ff.listar_funcionarios_att(funcionario)
+        fc.listar_funcionarios_att(funcionario)
 
         opcao = input(f'Você deseja demitir algum funcionário? (s/n) ').lower()
 
