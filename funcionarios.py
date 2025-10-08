@@ -29,6 +29,7 @@ funcionarios = [
     {'nome': 'JULIANA EVANGELISTA', 'idade': 21, 'senha': '1234'},
     {'nome': 'RAFAEL PIRÔPO', 'idade': 30, 'senha': '1414'},
     {'nome': 'KAIQUE AQUINO', 'idade': 20, 'senha': '1515'},
-    {'nome': 'HUDSON COIMBRA', 'idade': 18, 'senha': '1616'},
-    {'nome': '0', 'idade': 0, 'senha': '0'}
+    {'nome': 'HUDSON COIMBRA', 'idade': 18, 'senha': '1616'}  
 ]
+
+# {'nome': '0', 'idade': 0, 'senha': '0'}
