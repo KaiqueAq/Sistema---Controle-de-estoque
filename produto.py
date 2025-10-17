@@ -1,31 +1,25 @@
 #Estoque
-import vendas as vd, os
+import vendas as vd, os, json, clientes as cl
 
 estoqueMax = 100
 
-produtos = [
-    {'codigo': 1, 'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'lucro': 1.50, 'estoque': 50, 'vendaPorDia': 10},
-    {'codigo': 2, 'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'lucro': 1.50, 'estoque': 30, 'vendaPorDia': 15},
-    {'codigo': 3, 'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'lucro': 0.70, 'estoque': 80, 'vendaPorDia': 13},
-    {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'lucro': 0.70, 'estoque': 20, 'vendaPorDia': 8},
-    {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'lucro': 0.50, 'estoque': 100, 'vendaPorDia': 19}
-]
-produtos.sort(key=lambda x:x['codigo'])
 # produtosOrdenados = sorted(produtos, key=lambda x:x['nome'])
 # produtosOrdemPeloCod = sorted(produtosOrdenados, key=lambda x:x['codigo'])
 
 def gerar_codigo():
+    produtos = cl.dados.get('produtos', [])
     if len(produtos) == 0:
         return 1
     else:
         return max(p['codigo'] for p in produtos) + 1
-    
+
 def adicionar_produto():
+    produtos = cl.dados.get('produtos', [])
     nome = input("Nome do produto: ").lower()
     for p in produtos:
         if p['nome'] == nome:
             input('Produto já existe. Tente novamente.')
-            return  
+            return
 
     preco = float(input("Preço: "))
     custo = float(input("Custo: "))
@@ -33,15 +27,15 @@ def adicionar_produto():
     while True:
         estoque = int(input("Estoque inicial: "))
         if estoque > 100:
-            print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")         
+            print("Erro: Não é possível adicionar mais de 100 unidades ao estoque. Tente novamente.")
         elif estoque == 0:
             print("Erro: Não é possível adicionar estoque vazio. Tente novamente.")
         else:
             break
 
     vendaPorDia = int(input("Venda por dia: "))
-    
-    codigo = gerar_codigo() 
+
+    codigo = gerar_codigo()
 
     produtos.append({
         'codigo': codigo,
@@ -52,10 +46,12 @@ def adicionar_produto():
         'estoque': estoque,
         'vendaPorDia': vendaPorDia
     })
-    
+
+    cl.save_dados()  # Salva imediatamente após adicionar
     input(f"Produto adicionado com sucesso! Código do produto: {codigo}. Pressione qualquer tecla.")
 
 def remover_produto():
+    produtos = cl.dados.get('produtos', [])
     listar_produtos_att()
     codigo = int(input("\nDigite o código do produto a remover: "))
     for p in produtos:
@@ -66,6 +62,7 @@ def remover_produto():
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def atualizar_produto():
+    produtos = cl.dados.get('produtos', [])
     listar_produtos_att()
     codigo = input("\nDigite o código do produto a atualizar (ou sair): ")
     if codigo == 'sair':
@@ -95,6 +92,7 @@ def atualizar_produto():
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def listar_produtos():
+    produtos = cl.dados.get('produtos', [])
     print('Produtos:')
     print(' ____________________________________________________________________________')
     print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Venda/dia |')
@@ -102,14 +100,16 @@ def listar_produtos():
         print(f"|{p['codigo']:^5}|{p['nome']:<18}| R${p['preco']:<5.2f} | R${p['custo']:<5.2f} | R${p['lucro']:<5.2f} |{p['estoque']:>6}   | {p['vendaPorDia']:>6}    |")
     print('*============================================================================*')
     input('\nPressione qualquer tecla para continuar.')
-        
+
 def ver_produtos():
+    produtos = cl.dados.get('produtos', [])
     produtosOrdemNome = sorted(produtos, key=lambda x:x['nome'])
     print('Produtos:')
     for p in produtosOrdemNome:
         print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
 
 def listar_produtos_att():
+    produtos = cl.dados.get('produtos', [])
     print("Atualizando produtos:")
     print('_______________________________________________________________________________')
     print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Vendas/dia |')
@@ -118,6 +118,7 @@ def listar_produtos_att():
     print('===============================================================================')
 
 def menu_relatorios():
+    produtos = cl.dados.get('produtos', [])
     while True:
         os.system('cls')
         print('_=+=+=+=+=+=+=+=+=+=+=+=+=+_')

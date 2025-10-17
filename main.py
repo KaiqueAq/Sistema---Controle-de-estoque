@@ -21,6 +21,13 @@ Atividades Propostas:
 from limparTela import limpaTela
 import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd, os, time
 
+# Carregar dados ao iniciar
+clientes.load_dados()
+
+# Salvar dados ao fechar
+import atexit
+atexit.register(clientes.save_dados)
+
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
     limpaTela()
@@ -183,6 +190,7 @@ while True:
                         continue  
             case 4:
                 print('\nSaindo do programa...')
+                clientes.save_dados()
                 time.sleep(2)
                 break
             case _:

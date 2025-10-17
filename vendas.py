@@ -1,8 +1,8 @@
-import math, os
+import math, os, json, clientes as cl
 
-vendas = []
+vendas = cl.dados.get('vendas', [])
 carrinhoDeCompra = []
-totalDeVenda = 0 
+totalDeVenda = 0
 lucroDaVenda = 0
 
 # vendas = [

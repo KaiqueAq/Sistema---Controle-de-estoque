@@ -1,18 +1,42 @@
 #Cadastramento
-import os
+import os, json
 import produto as pd, funcionarios as fc, datetime, limparTela as lt, vendas as vd, time
 
-clientes = [
-    {'nome': 'JOÃO ALMEIDA DE SOUZA', 'idade': 21, 'cpf': '906.526.200-86'},
-    {'nome': 'MARIA APARECIDA', 'idade': 37, 'cpf': '870.026.320-60'},
-    {'nome': 'LUCA CARDOSO DA SILVA MELO', 'idade': 25, 'cpf': '490.665.810-50'},
-    {'nome': 'DAVID PEREIRA LUSTOZA', 'idade': 49, 'cpf': '493.513.930-70'},
-    {'nome': 'RODOLFO MOTA MONTEIRO', 'idade': 18, 'cpf': '360.314.650-60'},
-    {'nome': 'ERI GOMES DE MORAIS', 'idade': 36, 'cpf': '648.125.840-51'},
-    {'nome': 'PAULO MORAES DE JESUS NETO', 'idade': 39, 'cpf': '169.463.600-36'},
-    {'nome': 'ITALO DUTRA SILVA', 'idade': 19, 'cpf': '727.997.820-78'},
-    {'nome': 'VICTOR GUIMARÃES SILVA', 'idade': 52, 'cpf': '365.311.790-90'}
-]
+dados = {}
+
+def load_dados():
+    global dados
+    try:
+        with open('dados.json', 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+    except FileNotFoundError:
+        dados = {
+            'clientes': [
+                {'nome': 'JOÃO ALMEIDA DE SOUZA', 'idade': 21, 'cpf': '906.526.200-86'},
+                {'nome': 'MARIA APARECIDA', 'idade': 37, 'cpf': '870.026.320-60'},
+                {'nome': 'LUCA CARDOSO DA SILVA MELO', 'idade': 25, 'cpf': '490.665.810-50'},
+                {'nome': 'DAVID PEREIRA LUSTOZA', 'idade': 49, 'cpf': '493.513.930-70'},
+                {'nome': 'RODOLFO MOTA MONTEIRO', 'idade': 18, 'cpf': '360.314.650-60'},
+                {'nome': 'ERI GOMES DE MORAIS', 'idade': 36, 'cpf': '648.125.840-51'},
+                {'nome': 'PAULO MORAES DE JESUS NETO', 'idade': 39, 'cpf': '169.463.600-36'},
+                {'nome': 'ITALO DUTRA SILVA', 'idade': 19, 'cpf': '727.997.820-78'},
+                {'nome': 'VICTOR GUIMARÃES SILVA', 'idade': 52, 'cpf': '365.311.790-90'}
+            ],
+            'produtos': [
+                {'codigo': 1, 'nome': 'arroz', 'preco': 5.50, 'custo': 4.00, 'lucro': 1.50, 'estoque': 50, 'vendaPorDia': 10},
+                {'codigo': 2, 'nome': 'feijão', 'preco': 7.00, 'custo': 5.50, 'lucro': 1.50, 'estoque': 30, 'vendaPorDia': 15},
+                {'codigo': 3, 'nome': 'macarrão', 'preco': 3.20, 'custo': 2.50, 'lucro': 0.70, 'estoque': 80, 'vendaPorDia': 13},
+                {'codigo': 4, 'nome': 'leite', 'preco': 4.50, 'custo': 3.80, 'lucro': 0.70, 'estoque': 20, 'vendaPorDia': 8},
+                {'codigo': 5, 'nome': 'pão', 'preco': 2.00, 'custo': 1.50, 'lucro': 0.50, 'estoque': 100, 'vendaPorDia': 19}
+            ],
+            'vendas': []
+        }
+
+def save_dados():
+    with open('dados.json', 'w', encoding='utf-8') as f:
+        json.dump(dados, f, indent=4, ensure_ascii=False)
+
+clientes = dados.get('clientes', [])
 
 # def ordem(x):
 #     return x['nome']
@@ -68,26 +92,28 @@ def remover_cliente():
     print(f"\n Cliente {nome_remover} não encontrado.")
 
 def comprarProduto():
+    produtos = dados.get('produtos', [])
+    vendas = dados.get('vendas', [])
     try:
         qntsProdutos = int(input('Quantos produtos diferentes deseja comprar? '))
     except ValueError:
         input("Entrada inválida. Por favor, digite um número. Pressione qualquer tecla para continuar.")
     else:
         for i in range(qntsProdutos):
-            pd.produtos.sort(key=lambda x:x['nome'])
+            produtos.sort(key=lambda x:x['nome'])
             lt.limpaTela()
             print(' ______________________________________')
             print('|       Nome       |  Preço  | Estoque |')
             print('*--------------------------------------*')
-            for p in pd.produtos:
+            for p in produtos:
                 print(f"|{p['nome']:<18}| R${p['preco']:<5.2f} |{p['estoque']:>6}   |")
-            print('*--------------------------------------*')    
-            qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower() 
+            print('*--------------------------------------*')
+            qualProduto = input(f'\n({i+1}/{qntsProdutos}): Qual produto deseja comprar? ').lower()
 
             pdEncontrado = None
 
             # Procura o produto na nossa lista de na outra página produto.py
-            for p in pd.produtos:
+            for p in produtos:
                 if p['nome'] == qualProduto:
                     pdEncontrado = p
                     break
@@ -99,7 +125,7 @@ def comprarProduto():
 
             # Se achar o produto ele pede a quantidade
             qualQntd = int(input(f'Informe a quantidade de {qualProduto} desejada: '))
-            
+
             if qualQntd <= 0:
                 print("Quantidade inválida.")
                 continue
@@ -111,14 +137,14 @@ def comprarProduto():
             else:
                 # Se não for, diminui do estoque
                 pdEncontrado['estoque'] -= qualQntd
-                
+
             # Calcula o subTotal e o lucro do item
             subTotal = pdEncontrado['preco'] * qualQntd
             lucroItem = pdEncontrado['lucro'] * qualQntd
 
             if pdEncontrado['estoque'] == 0:
                 # O .remove() modifica a lista diretamente. Não precisa atribuir a uma variável.
-                pd.produtos.remove(pdEncontrado)
+                produtos.remove(pdEncontrado)
                 print(f'Adicionado ao carrinho. Estoque de {qualProduto} zerado. Produto removido do sistema.')
             else:
                 print(f'Adicionado ao carrinho. Estoque restante: {pdEncontrado["estoque"]} unidades.')
@@ -129,11 +155,11 @@ def comprarProduto():
                 'quantidade': qualQntd,
                 'subTotal': subTotal
             })
-            
+
             # Atualiza os totais da venda
             vd.totalDeVenda += subTotal
             vd.lucroDaVenda += lucroItem
-        
+
         # DEPOIS que o loop terminar, se o carrinho não estiver vazio, finalize a venda
             if vd.carrinhoDeCompra:
                 # Pega o CPF do cliente (poderia ser feito no início)
@@ -142,7 +168,7 @@ def comprarProduto():
                     cpfCliente = cpfCliente
                 else:
                     cpfCliente = 'Não informado'
-                
+
             # Cria o dicionário da nova venda com os dados acumulados
                 nova_venda = {
                     'cliente_cpf': cpfCliente,
@@ -153,20 +179,20 @@ def comprarProduto():
                 }
 
                 # Adiciona a venda finalizada na lista principal
-                vd.vendas.append(nova_venda)
+                vendas.append(nova_venda)
                 os.system('cls')
                 print("\nA compra foi realizada com Sucesso!")
                 print(f"\nCPF do Cliente: {nova_venda['cliente_cpf']}")
                 print("\nProdutos Comprados:\n")
                 print('|  produto  | Quantidade | Subtotal |')
-                for item in nova_venda['produtos']:               
+                for item in nova_venda['produtos']:
                     print(f"|{item['nome']:^11}|{item['quantidade']:^12}| R${item['subTotal']:<7.2f}|")
                 input(f"\nTOTAL DA VENDA: R${nova_venda['total']:.2f}")
                 lt.limpaTela()
             else:
                 input("\nNenhum produto foi adicionado ao carrinho. Compra não realizada. Pressione qualquer tecla.")
-        vd.carrinhoDeCompra = [] 
-        vd.totalDeVenda = 0 
+        vd.carrinhoDeCompra = []
+        vd.totalDeVenda = 0
         vd.lucroDaVenda = 0
 
    

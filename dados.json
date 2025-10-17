@@ -1,0 +1,125 @@
+{
+    "clientes": [
+        {
+            "nome": "JOÃO ALMEIDA DE SOUZA",
+            "idade": 21,
+            "cpf": "906.526.200-86"
+        },
+        {
+            "nome": "MARIA APARECIDA",
+            "idade": 37,
+            "cpf": "870.026.320-60"
+        },
+        {
+            "nome": "LUCA CARDOSO DA SILVA MELO",
+            "idade": 25,
+            "cpf": "490.665.810-50"
+        },
+        {
+            "nome": "DAVID PEREIRA LUSTOZA",
+            "idade": 49,
+            "cpf": "493.513.930-70"
+        },
+        {
+            "nome": "RODOLFO MOTA MONTEIRO",
+            "idade": 18,
+            "cpf": "360.314.650-60"
+        },
+        {
+            "nome": "ERI GOMES DE MORAIS",
+            "idade": 36,
+            "cpf": "648.125.840-51"
+        },
+        {
+            "nome": "PAULO MORAES DE JESUS NETO",
+            "idade": 39,
+            "cpf": "169.463.600-36"
+        },
+        {
+            "nome": "ITALO DUTRA SILVA",
+            "idade": 19,
+            "cpf": "727.997.820-78"
+        },
+        {
+            "nome": "VICTOR GUIMARÃES SILVA",
+            "idade": 52,
+            "cpf": "365.311.790-90"
+        }
+    ],
+    "produtos": [
+        {
+            "codigo": 1,
+            "nome": "arroz",
+            "preco": 5.5,
+            "custo": 4.0,
+            "lucro": 1.5,
+            "estoque": 50,
+            "vendaPorDia": 10
+        },
+        {
+            "codigo": 2,
+            "nome": "feijão",
+            "preco": 7.0,
+            "custo": 5.5,
+            "lucro": 1.5,
+            "estoque": 30,
+            "vendaPorDia": 15
+        },
+        {
+            "codigo": 3,
+            "nome": "macarrão",
+            "preco": 3.2,
+            "custo": 2.5,
+            "lucro": 0.7,
+            "estoque": 80,
+            "vendaPorDia": 13
+        },
+        {
+            "codigo": 4,
+            "nome": "leite",
+            "preco": 4.5,
+            "custo": 3.8,
+            "lucro": 0.7,
+            "estoque": 20,
+            "vendaPorDia": 8
+        },
+        {
+            "codigo": 5,
+            "nome": "pão",
+            "preco": 2.0,
+            "custo": 1.5,
+            "lucro": 0.5,
+            "estoque": 100,
+            "vendaPorDia": 19
+        },
+        {
+            "codigo": 6,
+            "nome": "ovo",
+            "preco": 22.0,
+            "custo": 232.0,
+            "lucro": -210.0,
+            "estoque": 2,
+            "vendaPorDia": 2
+        }
+    ],
+    "vendas": [
+        {
+            "cliente_cpf": "906.526.200-86",
+            "produtos": [
+                {
+                    "nome": "arroz",
+                    "quantidade": 2,
+                    "subTotal": 11.0
+                },
+                {
+                    "nome": "feijão",
+                    "quantidade": 1,
+                    "subTotal": 7.0
+                }
+            ],
+            "total": 18.0,
+            "lucro": 3.5,
+            "data": "2023-10-01"
+        }
+    ]
+}
