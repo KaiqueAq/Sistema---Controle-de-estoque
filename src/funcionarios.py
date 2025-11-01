@@ -1,4 +1,4 @@
-import produto as pd
+from . import produto as pd
 
 def listar_funcionarios(funcionarios):
     funcionarios.sort(key=lambda f: f['nome'])

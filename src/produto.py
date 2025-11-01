@@ -1,5 +1,6 @@
 #Estoque
-import vendas as vd, os, json, clientes as cl
+from . import vendas as vd, data as dt
+import os, json
 
 estoqueMax = 100
 
@@ -7,14 +8,14 @@ estoqueMax = 100
 # produtosOrdemPeloCod = sorted(produtosOrdenados, key=lambda x:x['codigo'])
 
 def gerar_codigo():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     if len(produtos) == 0:
         return 1
     else:
         return max(p['codigo'] for p in produtos) + 1
 
 def adicionar_produto():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     nome = input("Nome do produto: ").lower()
     for p in produtos:
         if p['nome'] == nome:
@@ -47,11 +48,11 @@ def adicionar_produto():
         'vendaPorDia': vendaPorDia
     })
 
-    cl.save_dados()  # Salva imediatamente após adicionar
+    dt.save_dados()  # Salva imediatamente após adicionar
     input(f"Produto adicionado com sucesso! Código do produto: {codigo}. Pressione qualquer tecla.")
 
 def remover_produto():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     listar_produtos_att()
     codigo = int(input("\nDigite o código do produto a remover: "))
     for p in produtos:
@@ -62,7 +63,7 @@ def remover_produto():
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def atualizar_produto():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     listar_produtos_att()
     codigo = input("\nDigite o código do produto a atualizar (ou sair): ")
     if codigo == 'sair':
@@ -92,7 +93,7 @@ def atualizar_produto():
     input("Produto não encontrado. Pressione qualquer tecla.")
 
 def listar_produtos():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     print('Produtos:')
     print(' ____________________________________________________________________________')
     print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Venda/dia |')
@@ -102,14 +103,14 @@ def listar_produtos():
     input('\nPressione qualquer tecla para continuar.')
 
 def ver_produtos():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     produtosOrdemNome = sorted(produtos, key=lambda x:x['nome'])
     print('Produtos:')
     for p in produtosOrdemNome:
         print(f"{p['nome']} - Preço: {p['preco']} - Estoque: {p['estoque']}")
 
 def listar_produtos_att():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     print("Atualizando produtos:")
     print('_______________________________________________________________________________')
     print('| Cod |       Nome       |  Preço  |  Custo  |  Lucro  | Estoque | Vendas/dia |')
@@ -118,7 +119,7 @@ def listar_produtos_att():
     print('===============================================================================')
 
 def menu_relatorios():
-    produtos = cl.dados.get('produtos', [])
+    produtos = dt.dados.get('produtos', [])
     while True:
         os.system('cls')
         print('_=+=+=+=+=+=+=+=+=+=+=+=+=+_')

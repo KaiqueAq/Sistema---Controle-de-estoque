@@ -18,15 +18,16 @@ Atividades Propostas:
 - D. Relatório de produtos mais vendidos.
 - E. Relatório de previsão de falta.
 '''
-from limparTela import limpaTela
-import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd, os, time
+from src.limparTela import limpaTela
+import os, time
+from src import produto, clientes, funcionarios as fc, gerente as gt, vendas as vd, data as dt
 
 # Carregar dados ao iniciar
-clientes.load_dados()
+dt.load_dados()
 
 # Salvar dados ao fechar
 import atexit
-atexit.register(clientes.save_dados)
+atexit.register(dt.save_dados)
 
 # Vai ter um menu que seleciona gerente ou cliente e sair
 while True:
@@ -190,7 +191,7 @@ while True:
                         continue  
             case 4:
                 print('\nSaindo do programa...')
-                clientes.save_dados()
+                dt.save_dados()
                 time.sleep(2)
                 break
             case _:

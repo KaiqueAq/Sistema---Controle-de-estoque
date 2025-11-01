@@ -1,6 +1,8 @@
-import math, os, json, clientes as cl
 
-vendas = cl.dados.get('vendas', [])
+import math, os, json
+from . import data as dt
+
+vendas = dt.dados.get('vendas', [])
 carrinhoDeCompra = []
 totalDeVenda = 0
 lucroDaVenda = 0

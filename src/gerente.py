@@ -1,4 +1,5 @@
-import os, funcionarios as fc
+import os
+from . import funcionarios as fc
 
 #def atualizar_gerente(func):
 #    gerente_ordenados = sorted(func, key=lambda x: x['nome'].lower())
